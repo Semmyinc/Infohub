@@ -23,7 +23,16 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', views.home, name='home'),
+    path('category/<slug:slug>/', views.category_posts, name='category_posts'),
+    path('categories/', views.categories, name='categories'),
+    path('categories/add_category/', views.add_category, name='add_category'),
+    path('categories/edit_category/<slug:slug>/', views.edit_category, name='edit_category'),
+    path('categories/delete_category/<slug:slug>/', views.delete_category, name='delete_category'),
     path('stories/', include('stories.urls')),
+    path('add_story/', views.add_story, name='add_story'),
+    path('edit_story/<slug:slug>/', views.edit_story, name='edit_story'),
+    path('delete_story/<slug:slug>/', views.delete_story, name='delete_story'),
+    path('search/', views.search, name='search'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

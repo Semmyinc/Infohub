@@ -5,5 +5,5 @@ def cat_func(request):
     return dict(categories=categories)
 
 def post_func(request):
-    posts = Blog.objects.filter(status='published') #.filter(status='published')
+    posts = Blog.objects.filter(status='published').order_by('-created_at') #.filter(status='published')
     return dict(posts=posts)

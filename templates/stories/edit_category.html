@@ -1,0 +1,18 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+<br><br><br><br><br><br>
+    <div class="container">
+        <div class="card text-center mx-auto" style="width: 300px;">
+            <br>
+            <h3 class="card-title">Update Category</h3>
+            <div class="card-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button class="btn btn-small btn-secondary mt-3">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

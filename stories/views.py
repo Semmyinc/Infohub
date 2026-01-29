@@ -1,7 +1,118 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from .models import Blog
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from .models import Blog, Category
+from django.contrib import messages
+from .forms import CategoryForm, StoryForm
+from django.urls import reverse
+from django.template.defaultfilters import slugify
 # Create your views here.
+
+
+# search functionality 
+def search(request):
+    context = {}
+    return render(request, 'stories/search.html', context)
+
+# function to create a new blog
+def add_story(request):
+    form = StoryForm()
+    if request.method == 'POST':
+        form = StoryForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            story = form.save(commit=False)
+            story.author = request.user
+            story.save()
+            story_name = form.cleaned_data['name']
+            story.slug = f'{slugify(story_name)}-{str(story.id)}'
+            story.save()
+            messages.success(request, f'{story_name} has been added successfully')
+            return redirect('stories')
+        messages.error(request, f'Errors detected while filling form. Please try again')
+        return redirect('add_story')
+
+    context = {'form':form}
+    return render(request, 'stories/add_story.html', context)
+
+def edit_story(request, slug):
+    story = get_object_or_404(Blog, slug=slug, status='published' )
+    if request.method == 'POST':
+        form = StoryForm(request.POST, request.FILES, instance=story)
+        if form.is_valid():
+            story_name = form.cleaned_data['name']
+            form.save()
+            messages.success(request, f'{story_name} has been updated successfully')
+            return redirect('home')
+        messages.error(request, f'Errors detected while submitting form. Please try again')
+        # return reverse(HttpResponseRedirect('edit_category', args=[''])
+        return redirect('home')
+    
+    form = StoryForm(instance=story)
+    context = {'form':form}
+    return render(request, 'stories/edit_story.html', context)
+
+def delete_story(request, slug):
+    story = get_object_or_404(Blog, slug=slug)
+    if request.method == 'POST':
+        story.delete()
+        messages.success(request, f'story deleted successfully')
+        return redirect('home')
+    
+    context = {'story':story} 
+    return render(request, 'stories/delete_story.html', context)
+
+# function to create a new category 
+def add_category(request):
+    form = CategoryForm()
+    if request.method == 'POST':
+        form = CategoryForm(request.POST or None)
+        if form.is_valid():
+            category_name = form.cleaned_data['name']
+            # slug = form.cleaned_data.get('slug')
+            category = form.save(commit=False)
+            category.user = request.user
+            category.save()
+            name = form.cleaned_data['name']
+            category.slug = f'{slugify(name)}-{str(category.id)}'
+            category.save()
+            messages.success(request, f'{category_name} has been added successfully')
+            return redirect('categories')
+        messages.errors(request, f'Errors detected while filling form. Please try again')
+        return redirect('add_category')
+    
+    context = {'form':form}
+    return render(request, 'stories/add_category.html', context)
+
+def edit_category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            category_name = form.cleaned_data['name']
+            form.save()
+            messages.success(request, f'{category_name} has been updated successfully')
+            return redirect('home')
+        messages.errors(request, f'Errors detected while submitting form. Please try again')
+        # return reverse(HttpResponseRedirect('edit_category', args=[''])
+        return redirect('add_category')
+    
+    form = CategoryForm(instance=category)
+    context = {'form':form}
+    return render(request, 'stories/edit_category.html', context)
+
+def delete_category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    if request.method == 'POST':
+        category.delete()
+        messages.success(request, f'Category name deleted successfully')
+        return redirect('home')
+    
+    context = {'category':category} 
+    return render(request, 'stories/delete_category.html', context)
+
+
+def categories(request):
+    context = {}
+    return render(request, 'stories/categories.html', context)
 
 def home(request):
     stories = Blog.objects.filter(is_featured=True, status='published')
@@ -16,7 +127,18 @@ def stories(request):
     return render(request, 'stories/stories.html', context)
 
 def story(request, slug):
-    # blog = get_object_or_404(Blog, slug=slug, status='published')
-
-    context = {}
+    blog = get_object_or_404(Blog, slug=slug, status='published')
+    context = {'blog':blog}
     return render(request, 'stories/story.html', context)
+
+def category_posts(request, slug):
+    try:
+        # category = Category.objects.get(slug=slug)
+        # category_posts = Blog.objects.filter(category=category, status='published')
+        category_posts = Blog.objects.filter(category__slug=slug, status='published') #the above 2 lines of code replaced by this single line
+    except Blog.DoesNotExist:
+        messages.warning(request, f'Post(s) in this category is/are not available yet')
+        return redirect('home')
+    context = {'category_posts':category_posts}
+    return render(request, 'category_posts.html', context)
+

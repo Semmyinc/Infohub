@@ -1,0 +1,18 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+<br><br><br><br><br><br><br><br>
+    <div class="container">
+        <div class="card mx-auto my-auto text-center" style="width: 520px;">
+            <div class="card-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <p class="card-text">Are you sure that you want to delete post {{story.name}} ?</p>
+                    <a href="{% url 'home' %}" class="btn btn-small btn-secondary">Cancel</a>
+                    <Button href="" class="btn btn-small btn-danger">Yes, Delete</Button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

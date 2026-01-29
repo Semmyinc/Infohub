@@ -42,7 +42,7 @@
                             </div>
                             <div class="down-content">
                             <span>{{story.category}}</span>
-                            <a href="post-details.html"><h4>{{story.name}}</h4></a>
+                            <a href="{% url 'story' story.slug %}"><h4>{{story.name}}</h4></a>
                             <ul class="post-info">
                                 <li><a href="#">{{story.author.username}}</a></li>
                                 <li><a href="#">{{story.created_at | timesince}} ago</a></li>
@@ -64,6 +64,8 @@
                         </div>
                         </div>
                     {% endfor %}
+                {% else %}
+                        <p class="card-text">There are no stories yet. <a href="{% url 'add_story' %}">Create One</a></p>
                 {% endif %}
 
                 

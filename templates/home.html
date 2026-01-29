@@ -150,11 +150,20 @@
         <div class="row">
           <div class="col-lg-8">
             <div class="all-blog-posts">
+              {% if messages %}
+                  {% for message in messages %}
+                      <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                          {{message}}
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                  {% endfor %}
+              {% endif%}
               <div class="row">
                 {% if stories %}
                 {% for story in stories %}
                   <div class="col-lg-12">
                     <div class="blog-post">
+                      
                       <div class="blog-thumb">
                         <img src="{{story.image.url}}" alt="">
                       </div>
@@ -165,6 +174,10 @@
                           <li><a href="#">{{story.author.username}}</a></li>
                           <li><a href="#">{{story.created_at | timesince}} ago</a></li>
                           <li><a href="#">12 Comments</a></li>
+                          {% if request.user == story.author %}
+                            <li class="text-end"><a href="{% url 'edit_story' story.slug %}"><i class="fas fa-edit"></i></a></li>
+                            <li class="text-end"><a href="{% url 'delete_story' story.slug %}"><i class="fas fa-trash"></i></a></li>
+                          {% endif %}
                         </ul>
                         <p>{{story.body | slice:':150'}}<a rel="nofollow" href="https://templatemo.com/contact" target="_parent">Contact TemplateMo</a> for more info. Thank you.</p>
                         <div class="post-options">
@@ -193,6 +206,7 @@
                 
               </div>
             </div>
+            <p class="card-text">Something on your mind? <a href="{% url 'add_story' %}">Create Post</a></p>
           </div>
           <div class="col-lg-4">
             {% include 'includes/sidebar.html' %}
@@ -250,7 +264,7 @@
                     <div class="content">
                       <ul>
                         {% for category in categories %}
-                          <li><a href="#">{{category}}</a></li>
+                          <li><a href="">{{category}}</a></li>
                         {% endfor %}
                       </ul>
                     </div>

@@ -3,8 +3,9 @@ from users.models import Users
 # Create your models here.
 
 class Category(models.Model):
+    user = models.ForeignKey(Users,on_delete=models.CASCADE, unique=True, blank=True, null=True)
     name = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=255, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -28,7 +29,7 @@ class Blog(models.Model):
     image = models.ImageField(upload_to='uploads/blog_image',)
     summary = models.CharField(max_length=255)
     body = models.TextField()
-    status = models.CharField(max_length=50, choices=STATUS, default='Draft')
+    status = models.CharField(max_length=50, choices=STATUS, default='draft')
     image_pg = models.ImageField(upload_to='uploads/blog_image_on_blog', blank=True)
     is_featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
