@@ -2,9 +2,15 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="sidebar-item search">
-                <form id="search_form" name="gs" method="GET" action="#">
-                    <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
+                <form method="POST" action="{% url 'search' %}">
+                    {% csrf_token %}
+                    <input type="text" name="keyword" class="searchText" placeholder="Search Items" autocomplete="on">
                 </form>
+                {% if search_count == 1 %}
+                    <p>{{search_count}} result found </p>
+                {% elif search_count > 1 %}
+                    <p>{{search_count}} results found </p>
+                {% endif %}
             </div>
         </div>
         <div class="col-lg-12">
@@ -17,7 +23,7 @@
                         {% if posts %}
                             {% for post in posts %}
                                 <li>
-                                    <a href="post-details.html">
+                                    <a href="{% url 'story' post.slug %}">
                                         <h5>{{post.name}}</h5>
                                         <span>{{post.created_at | timesince}} ago</span>
                                     </a>
@@ -27,11 +33,8 @@
                     <!-- <li><a href="post-details.html">
                         <h5>Suspendisse et metus nec libero ultrices varius eget in risus</h5>
                         <span>May 28, 2020</span>
-                    </a></li>
-                    <li><a href="post-details.html">
-                        <h5>Swag hella echo park leggings, shaman cornhole ethical coloring</h5>
-                        <span>May 14, 2020</span>
-                    </a></li> -->
+                    </a></li>-->
+                        <li>Wanna Share a thought? <a href="{% url 'add_story' %}">Post it</a></li>
                     </ul>
                 </div>
             </div>

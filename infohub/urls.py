@@ -33,6 +33,7 @@ urlpatterns = [
     path('edit_story/<slug:slug>/', views.edit_story, name='edit_story'),
     path('delete_story/<slug:slug>/', views.delete_story, name='delete_story'),
     path('search/', views.search, name='search'),
+    path('users/', include('users.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

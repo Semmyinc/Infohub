@@ -1,0 +1,59 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <br><br><br><br><br>
+        <div class="article mx-auto text-center" style="width: 300px;">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col card-title text-center">My Profile</div>                   
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <img src="" alt="">
+                    </div>
+                    <div class="col">{{profileform.gender}}</div>  
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col card-title text-center">
+                        {{userform.first_name}}
+                    </div>
+                    <div class="col card-title text-center">
+                        {{userform.last_name}}
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col card-title text-center">
+                        {{userform.username}}
+                    </div>
+                    <div class="col card-title text-center">
+                        {{userform.phone}}
+                    </div>
+                    <div class="col card-title text-center">
+                        {{userform.email}}
+                    </div>
+                </div>   
+
+                <div class="row mb-3">
+                    <div class="col card-title text-center">
+                        {{profileform.address}}
+                    </div>
+                    <div class="col card-title text-center">
+                        {{profileform.city}}
+                    </div>
+                    <div class="col card-title text-center">
+                        {{profileform.state}}   #to be completed
+                    </div>
+                </div>   
+                
+                <button type="submit" class="btn btn-small btn-secondary">Update</button>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}
+

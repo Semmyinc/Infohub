@@ -74,3 +74,22 @@ class Users(AbstractBaseUser):
 
     class Meta:
         verbose_name_plural = 'Users'
+
+    def fullname(self):
+        return f'{self.first_name} {self.last_name}'
+
+sex = (
+    ('male', 'male'),
+    ('female', 'female'),
+)
+class Profile(models.Model):
+    user = models.OneToOneField(Users, on_delete=models.CASCADE)
+    gender = models.CharField(max_length=20, choices=sex)
+    address = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='uploads/myprofile_photo/', default='uploads/myprofile_photo/default.jpg')
+
+    def __str__(self):
+        return self.user.username

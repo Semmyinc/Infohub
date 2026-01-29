@@ -5,12 +5,32 @@ from django.contrib import messages
 from .forms import CategoryForm, StoryForm
 from django.urls import reverse
 from django.template.defaultfilters import slugify
+from django.db.models import Q
 # Create your views here.
 
 
 # search functionality 
 def search(request):
-    context = {}
+    if request.method == 'POST':
+        keyword = request.POST['keyword']
+        searched = Blog.objects.filter(Q(name__icontains=keyword)
+                                     |Q(category__name__icontains=keyword)
+                                     |Q(author__username__icontains=keyword)
+                                     |Q(author__email__icontains=keyword)
+                                     |Q(author__first_name__icontains=keyword)
+                                     |Q(author__last_name__icontains=keyword)
+                                    #  |Q(author__fullname__icontains=keyword)
+                                     |Q(author__phone__icontains=keyword)
+                                     |Q(summary__icontains=keyword)
+                                     |Q(body__icontains=keyword)
+                                     |Q(status__icontains=keyword)
+                                     |Q(is_featured__icontains=keyword)
+                                     |Q(created_at__icontains=keyword)
+                                     |Q(modified_at__icontains=keyword)
+                                     )
+    search_count = searched.count()
+
+    context = {'searched':searched, 'search_count':search_count}
     return render(request, 'stories/search.html', context)
 
 # function to create a new blog
@@ -76,7 +96,7 @@ def add_category(request):
             category.save()
             messages.success(request, f'{category_name} has been added successfully')
             return redirect('categories')
-        messages.errors(request, f'Errors detected while filling form. Please try again')
+        messages.error(request, f'Errors detected while filling form. Please try again')
         return redirect('add_category')
     
     context = {'form':form}
@@ -115,7 +135,7 @@ def categories(request):
     return render(request, 'stories/categories.html', context)
 
 def home(request):
-    stories = Blog.objects.filter(is_featured=True, status='published')
+    stories = Blog.objects.filter(status='published').order_by('-created_at')
     # stories = Blog.objects.all()
     context = {'stories':stories}
     # return HttpResponse("Ok")
