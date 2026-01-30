@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Create your models here.
 
@@ -30,17 +30,19 @@ class UsersManager(BaseUserManager):
             email = self.normalize_email(email),
             username = username,
             first_name = first_name,
-            last_name = last_name
+            last_name = last_name,
+            password = password
         )
 
         user.is_admin = True
         user.is_active = True
         user.is_staff = True
-        user.is_superadmin = True
+        # user.is_superadmin = True #Had this commented during my personal research to make my custom usermodel work effectively
+        is_superuser = True
         user.save(using=self._db)
         return user
 
-class Users(AbstractBaseUser):
+class Users(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
@@ -53,7 +55,8 @@ class Users(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
-    is_superadmin = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    
 
     # set login field 
 
@@ -62,14 +65,18 @@ class Users(AbstractBaseUser):
 
     objects = UsersManager()
 
+    # groups = models.ManyToManyField('auth.Group', related_name='users_set', blank=True)
+
+    # user_permissions = models.ManyToManyField('auth.Remission', related_name='users_set', blank=True)
+
     def __str__(self):
         return self.email
     
-    def has_perm(self, perm, obj=None):
-        return self.is_admin
+    # def has_perm(self, perm, obj=None):
+    #     return self.is_admin
     
-    def has_module_perms(self, add_label):
-        return True
+    # def has_module_perms(self, add_label):
+    #     return True
     
 
     class Meta:

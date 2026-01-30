@@ -3,7 +3,7 @@ from users.models import Users
 # Create your models here.
 
 class Category(models.Model):
-    user = models.ForeignKey(Users,on_delete=models.CASCADE, unique=True, blank=True, null=True)
+    user = models.ForeignKey(Users,on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

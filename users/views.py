@@ -14,6 +14,10 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 
+def dashboard(request):
+    context = {}
+    return render(request, 'users/dashboard.html', context)
+
 def register(request):
     form = RegisterForm()
     if request.method =='POST':
@@ -187,3 +191,4 @@ def reset_password(request):
             return redirect('reset_password')
     else:
         return render(request, 'users/reset_password.html')
+    
