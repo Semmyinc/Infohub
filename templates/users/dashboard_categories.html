@@ -1,0 +1,44 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <br><br><br><br><br>
+        <div class="card text-center mx-auto">
+            <h3 class="card-header">Categories <a href="{% url 'add_category' %}" class="small float-right"><i class="fas fa-plus small"></i></a></h3>
+            <div class="row">
+                <div class="col-3">
+                    {% include 'includes/dashboard_sidebar.html' %}
+                </div>
+                <div class="col-9 py-3 px-auto">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Category Name</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col">Modified At</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in categories %}
+                             
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{category.name}}</td>
+                                    <td>{{category.created_at}}</td>
+                                    <td>{{category.modified_at}}</td>
+                                    <td><a href="{% url 'edit_category' category.slug %}" class="text-success"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'delete_category' category.slug %}" class="text-danger"><i class="fas fa-trash"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+                                                        
+
+
+

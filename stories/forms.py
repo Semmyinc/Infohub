@@ -10,7 +10,7 @@ class CategoryForm(forms.ModelForm):
 class StoryForm(forms.ModelForm):
     name = forms.CharField(label='', max_length=255, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Post Title'}))
     summary = forms.CharField(label='', max_length=255, widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'Post Summary'}))
-    body = forms.CharField(label='', max_length=255, widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'Post Body'}))
+    body = forms.CharField(label='', widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'Post Body'}))
     # category = forms.ModelChoiceField(queryset=queryset.all())
     class Meta:
         model = Blog

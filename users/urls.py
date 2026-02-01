@@ -25,6 +25,9 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('profile/', views.profile, name='profile'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('dashboard_categories/', views.dashboard_categories, name='dashboard_categories'),
+    path('dashboard_stories/', views.dashboard_stories, name='dashboard_stories'),
+    path('dashboard_users/', views.dashboard_users, name='dashboard_users'),
     path('forgot_password/', views.forgot_password, name='forgot_password'),
         # mail activation
     path("activate/<uidb64>/<token>/", views.activate, name='activate'),

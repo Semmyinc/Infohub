@@ -3,7 +3,7 @@
 {% block content %}
     <br><br><br><br><br><br>
     <div class="container">
-        <div class="card text-center mx-auto" style="width: 520px;">
+        <div class="card text-center mx-auto" style="width: 600px;">
             <br>
             <h3 class="card-title">Create Story</h3>
             <div class="card-body">
@@ -20,8 +20,8 @@
                         <div class="col">{{form.body}}</div>
                     </div>
                     <div class="row mb-3 mx-auto" >
-                        <label for="">Category</label><br>
-                        <div class="col">{{form.category}}</div>
+                        <label for="">Category</label>
+                        <div class="col">{{form.category}} &nbsp; <a href="{% url 'add_category' %}"><i class="fas fa-plus"></i></a></div>
                     </div>
                     
                     <div class="row mb-3 mx-auto" >

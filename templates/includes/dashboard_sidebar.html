@@ -1,0 +1,8 @@
+<ul class="py-3">
+    <li class="mb-2 {% if request.path == '/users/dashboard/' %}bg-light{% endif %}"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li class="mb-2 {% if '/users/dashboard_categories/' in request.path %}bg-light{% endif %}"><a href="{% url 'dashboard_categories' %}">Categories</a></li>
+    <li class="mb-2 {% if '/users/dashboard_stories/' in request.path %}bg-light{% endif %}"><a href="{% url 'dashboard_stories' %}">stories</a></li>
+    {% if request.user.groups.all.0.name == 'manager' or request.user.is_superuser %}
+    <li class="mb-2 {% if '/users/dashboard_users/' in request.path %}bg-light{% endif %}"><a href="{% url 'dashboard_users' %}">Users</a></li>
+    {% endif %}
+</ul>

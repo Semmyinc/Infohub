@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegisterForm, ProfileForm, UserForm
-from.models import Users
+from.models import Users, Profile
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 import requests
+from stories.models import Category, Blog
+from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
 
 # for verification
@@ -15,8 +17,33 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 
 def dashboard(request):
-    context = {}
+    categories = Category.objects.all()
+    stories = Blog.objects.all()
+    category_count = categories.count()
+    story_count = stories.count
+    context = {'category_count':category_count, 'story_count':story_count}
     return render(request, 'users/dashboard.html', context)
+
+def dashboard_categories(request):
+    context = {}
+    return render(request, 'users/dashboard_categories.html', context)
+
+def dashboard_stories(request):
+    stories = Blog.objects.all()
+
+    context = {'stories':stories}
+    return render(request, 'users/dashboard_stories.html', context)
+
+def is_manager(user):
+    manager = user.groups.filter(name='manager').exists()
+    return manager
+
+@user_passes_test(is_manager)
+def dashboard_users(request):
+    users = Users.objects.all()
+
+    context = {'users':users}
+    return render(request, 'users/dashboard_users.html', context)
 
 def register(request):
     form = RegisterForm()
@@ -93,16 +120,16 @@ def login_user(request):
 
                 print('query: ', query)
                 # query:  next=/payment/checkout/
-                print('_________')
+                # print('_________')
                 params = dict(x.split('=') for x in query.split('&'))
-                print('params: ', params)
+                # print('params: ', params)
                 # params:  {'next': '/payment/checkout/'}
                 if 'next' in params:
                     next_page = params['next']
                     return redirect(next_page)
                 
             except:
-                return redirect('home')
+                return redirect('dashboard')
         else:
             # messages.info(request, f'Invalid login credentials. Please check and try again.')
             return redirect('login')
@@ -117,6 +144,8 @@ def logout_user(request):
     return redirect('login')
 
 def profile(request):
+    profile = Profile.objects.get(user__id = request.user.id)
+    user = Users.objects.get(id=request.user.id)
     userform = UserForm()
     profileform = ProfileForm()
     if request.method == 'POST':
@@ -126,7 +155,9 @@ def profile(request):
             userform.save()
             profileform.save()
             messages.success(request, f'Profile updated successfully')
-    
+
+    userform = UserForm(instance=user)
+    profileform = ProfileForm(instance=profile)
     context = {'userform':userform, 'profileform':profileform}
     return render(request, 'users/profile.html', context)
 

@@ -1,0 +1,48 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <br><br><br><br><br>
+        <div class="card text-center mx-auto">
+            <h3 class="card-header">Stories <a href="{% url 'add_story' %}" class="small float-right"><i class="fas fa-plus small"></i></a></h3>
+            <div class="row">
+                <div class="col-3">
+                    {% include 'includes/dashboard_sidebar.html' %}
+                </div>
+                <div class="col-9 py-3 px-auto">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Story Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Featured</th>
+                                <!-- <th scope="col">Created at</th>
+                                <th scope="col">Modified at</th> -->
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for story in stories %}
+                             
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{story.name}}</td>
+                                    <td>{{story.category}}</td>
+                                    <td>{{story.author.username}}</td>
+                                    <td>{{story.status}}</td>
+                                    <td>
+                                        {% if story.is_featured == True %} <i class="fas fa-check text-success"></i>{% else %} <i class="fas fa-times text-danger"></i>{% endif %}
+                                    </td>
+                                    <td><a href="{% url 'edit_story' story.slug %}" class="text-success"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'delete_story' story.slug %}" class="text-danger"><i class="fas fa-trash"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

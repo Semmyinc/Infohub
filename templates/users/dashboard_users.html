@@ -1,0 +1,54 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <br><br><br><br><br>
+        <div class="card text-center mx-auto">
+            <h3 class="card-header">Users <a href="{% url 'register' %}" class="small float-right"><i class="fas fa-plus small"></i></a></h3>
+            <div class="row">
+                <div class="col-2">
+                    {% include 'includes/dashboard_sidebar.html' %}
+                </div>
+                <div class="col-10 py-3 px-auto">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Full Name</th>
+                                <th scope="col">email</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Active</th>
+                                <th scope="col">Staff</th>
+                                <th scope="col">Superuser</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for person in users %}
+                             
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{person.first_name}} {{person.last_name}}</td>
+                                    <td>{{person.email}}</td>
+                                    <td>{{person.username}}</td>
+                                    <td>{{person.phone}}</td>
+                                    <td>
+                                        {% if person.is_active == True %} <i class="fas fa-check text-success"></i>{% else %} <i class="fas fa-times text-danger"></i>{% endif %}
+                                    </td>
+                                    <td>
+                                        {% if person.is_staff %} <i class="fas fa-check text-success"></i>{% else %} <i class="fas fa-times text-danger"></i>{% endif %}
+                                    </td>
+                                    <td>
+                                        {% if person.is_superuser %} <i class="fas fa-check text-success"></i>{% else %} <i class="fas fa-times text-danger"></i>{% endif %}
+                                    </td>
+                                    <td><a href="#" class="text-success"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="text-danger"><i class="fas fa-trash"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
