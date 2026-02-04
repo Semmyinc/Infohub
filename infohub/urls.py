@@ -16,23 +16,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from stories import views
+from stories import views as stories_views
+from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', views.home, name='home'),
-    path('category/<slug:slug>/', views.category_posts, name='category_posts'),
-    path('categories/', views.categories, name='categories'),
-    path('categories/add_category/', views.add_category, name='add_category'),
-    path('categories/edit_category/<slug:slug>/', views.edit_category, name='edit_category'),
-    path('categories/delete_category/<slug:slug>/', views.delete_category, name='delete_category'),
+    path('team/', include('team.urls')),
+    # path('about/', views.about, name='about'),
     path('stories/', include('stories.urls')),
-    path('add_story/', views.add_story, name='add_story'),
-    path('edit_story/<slug:slug>/', views.edit_story, name='edit_story'),
-    path('delete_story/<slug:slug>/', views.delete_story, name='delete_story'),
-    path('search/', views.search, name='search'),
+    path('categories/', include('category.urls')),
+    path('category_posts/<slug:slug>', stories_views.category_posts, name='category_posts'),
+    path('categories/add_category/', stories_views.add_category, name='add_category'),
+    path('categories/edit_category/<slug:slug>/', stories_views.edit_category, name='edit_category'),
+    path('categories/delete_category/<slug:slug>/', stories_views.delete_category, name='delete_category'),
+    path('stories/', include('stories.urls')),
+    path('add_story/', stories_views.add_story, name='add_story'),
+    path('edit_story/<slug:slug>/', stories_views.edit_story, name='edit_story'),
+    path('delete_story/<slug:slug>/', stories_views.delete_story, name='delete_story'),
+    path('search/', stories_views.search, name='search'),
     path('users/', include('users.urls')),
 ]
 if settings.DEBUG:

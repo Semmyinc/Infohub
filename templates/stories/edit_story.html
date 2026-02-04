@@ -1,20 +1,167 @@
 {% extends 'includes/base.html' %}
 
+<br><br><br><br><br>
+    <!-- <div class="container">
+        <div class="row">
+            <div class="col">
+                {% include 'includes/dashboard_sidebar.html' %}
+            </div>
+            <div class="card text-center mx-auto" style="width: 520px;">
+                <br>
+                <h3 class="card-title">Update Story</h3>
+                <div class="card-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button class="btn btn-small btn-secondary mt-3">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+{% load static %}
 
 {% block content %}
-<br><br><br><br><br><br>
-    <div class="container">
-        <div class="card text-center mx-auto" style="width: 520px;">
-            <br>
-            <h3 class="card-title">Update Story</h3>
-            <div class="card-body">
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    {{form.as_p}}
-                    <button class="btn btn-small btn-secondary mt-3">Update</button>
-                </form>
+<div class="dashboard-wrapper bg-light min-vh-100 py-4">
+    <div class="container-fluid px-lg-5">
+        <div class="row">
+            <!-- Sidebar (Reusing your beautiful component) -->
+            <div class="col-lg-3 col-xl-2 mb-4">
+                <div class="sticky-top" style="top: 2rem;">
+                    {% include 'includes/dashboard_sidebar.html' %}
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-lg-9 col-xl-10">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    
+                    <!-- Header with Contextual Info -->
+                    <div class="card-header bg-white border-bottom py-3 px-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-1 small">
+                                    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}" class="text-decoration-none text-muted">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'dashboard_stories' %}" class="text-decoration-none text-muted">Stories</a></li>
+                                    <li class="breadcrumb-item active">Edit</li>
+                                </ol>
+                            </nav>
+                            <h4 class="mb-0 fw-bold text-dark">Editing: <span class="text-primary">{{ story.name }}</span></h4>
+                        </div>
+                        <div class="text-end d-none d-md-block">
+                            <span class="badge bg-light text-dark border fw-normal">Created: {{ story.created_at|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4 p-lg-5">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <!-- Section 1: Content -->
+                            <div class="row g-4 mb-5">
+                                <div class="col-md-8">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">Story Title</label>
+                                    {{ form.name }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">Category</label>
+                                    {{ form.category }}
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">Short Summary</label>
+                                    {{ form.summary }}
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-bold text-muted small text-uppercase">Full Content</label>
+                                    {{ form.body }}
+                                </div>
+                            </div>
+
+                            <!-- Section 2: Media Management -->
+                            <div class="row g-4 mb-5 p-4 rounded-4 bg-white border">
+                                <div class="col-12">
+                                    <h6 class="fw-bold mb-3"><i class="fas fa-images me-2 text-primary"></i>Media Assets</h6>
+                                </div>
+                                
+                                <!-- Cover Image Preview -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold small">Current Cover Image</label>
+                                    <div class="mb-3">
+                                        {% if story.image %}
+                                            <img src="{{ story.image.url }}" class="img-thumbnail rounded-3 shadow-sm mb-2" style="height: 120px; width: 100%; object-fit: cover;">
+                                        {% else %}
+                                            <div class="bg-light rounded-3 text-center py-4 text-muted border">No image</div>
+                                        {% endif %}
+                                        {{ form.image }}
+                                    </div>
+                                </div>
+
+                                <!-- Page Image Preview -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold small">Blog Page Image</label>
+                                    <div class="mb-3">
+                                        {% if story.image_pg %}
+                                            <img src="{{ story.image_pg.url }}" class="img-thumbnail rounded-3 shadow-sm mb-2" style="height: 120px; width: 100%; object-fit: cover;">
+                                        {% else %}
+                                            <div class="bg-light rounded-3 text-center py-4 text-muted border">No image</div>
+                                        {% endif %}
+                                        {{ form.image_pg }}
+                                    </div>
+                                </div>
+
+                                <!-- Featured Image Preview -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold small">Featured Image</label>
+                                    <div class="mb-3">
+                                        {% if story.featured_image %}
+                                            <img src="{{ story.featured_image.url }}" class="img-thumbnail rounded-3 shadow-sm mb-2" style="height: 120px; width: 100%; object-fit: cover;">
+                                        {% else %}
+                                            <div class="bg-light rounded-3 text-center py-4 text-muted border">No image</div>
+                                        {% endif %}
+                                        {{ form.featured_image }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 3: Status & Visibility -->
+                            <div class="row align-items-center bg-dark text-white p-4 rounded-4 mx-0 shadow-sm">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold small text-uppercase opacity-75">Publishing Status</label>
+                                    {{ form.status }}
+                                </div>
+                                <div class="col-md-8 d-flex justify-content-md-end pt-3 pt-md-0">
+                                    <div class="form-check form-switch pt-2">
+                                        {{ form.is_featured }}
+                                        <label class="form-check-label fw-bold ms-2">Feature on Homepage</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Final Actions -->
+                            <div class="d-flex justify-content-between align-items-center mt-5 pt-4 border-top">
+                                <button type="button" class="btn btn-outline-danger px-4" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                    <i class="fas fa-trash-alt me-2"></i>Delete Story
+                                </button>
+                                <div class="d-flex gap-3">
+                                    <a href="{% url 'dashboard_stories' %}" class="btn btn-light px-4">Cancel</a>
+                                    <button type="submit" class="btn btn-primary px-5 fw-bold shadow">Save Changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
+
+<style>
+    :root { --primary-orange: #f48840; }
+    .form-control, .form-select { border-radius: 10px; border: 1px solid #e0e0e0; padding: 0.8rem; }
+    .form-control:focus { border-color: var(--primary-orange); box-shadow: 0 0 0 4px rgba(244, 136, 64, 0.1); }
+    .btn-primary { background: var(--primary-orange); border: none; }
+    .btn-primary:hover { background: #d6712e; }
+    .form-check-input:checked { background-color: var(--primary-orange); border-color: var(--primary-orange); }
+</style>
 
 {% endblock %}

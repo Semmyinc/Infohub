@@ -1,5 +1,7 @@
 {% extends 'includes/base.html' %}
 {% block content %}
+
+{% load static %}
 <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
@@ -38,7 +40,11 @@
                         <div class="col-lg-6">
                         <div class="blog-post">
                             <div class="blog-thumb">
-                            <img src="{{story.image_pg.url}}" alt="">
+                              {% if story.image_pg %}
+                                <img src="{{story.image_pg.url}}" alt="">
+                              {% else %}
+                                <img src="{% static 'assets/images/blog_default.jpg' %}" alt="">
+                              {% endif %}
                             </div>
                             <div class="down-content">
                             <span>{{story.category}}</span>

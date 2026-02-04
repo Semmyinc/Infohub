@@ -34,11 +34,11 @@ def dashboard_stories(request):
     context = {'stories':stories}
     return render(request, 'users/dashboard_stories.html', context)
 
-def is_manager(user):
-    manager = user.groups.filter(name='manager').exists()
-    return manager
+# def is_manager(user):
+#     manager = user.groups.filter(name='manager').exists()
+#     return manager
 
-@user_passes_test(is_manager)
+# @user_passes_test(is_manager)
 def dashboard_users(request):
     users = Users.objects.all()
 
@@ -79,7 +79,8 @@ def register(request):
             send_email.send()
 
             # messages.success(request, f'Thank you for registering. Verification mail has been sent to your email for confirmation.')
-            return redirect('/users/login/?command=verification&email='+email)
+            # return redirect('/users/login/?command=verification&email='+email)
+            return redirect('home')
 
     
     context = {'form':form}
@@ -222,4 +223,3 @@ def reset_password(request):
             return redirect('reset_password')
     else:
         return render(request, 'users/reset_password.html')
-    

@@ -1,0 +1,85 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+
+{% load static %}
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>about us</h4>
+                <h2>more about us!</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- Banner Ends Here -->
+
+
+    <style>
+    .about-section { padding: 60px 0; background: #f8f9fa; }
+    .section-title { text-align: center; margin-bottom: 50px; font-weight: 700; }
+    .owner-card { 
+        background: #fff; 
+        border-radius: 15px; 
+        padding: 40px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease;
+        height: 100%;
+        text-align: center;
+    }
+    .owner-card:hover { transform: translateY(-10px); }
+    .owner-img { 
+        width: 130px; height: 130px; 
+        border-radius: 50%; 
+        object-fit: cover; 
+        margin-bottom: 20px;
+        border: 5px solid #eee;
+    }
+    .owner-name { font-size: 1.5rem; margin-bottom: 5px; color: #333; }
+    .owner-role { color: #f48840; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+    .owner-bio { margin-top: 15px; color: #666; font-size: 0.95rem; }
+</style>
+
+<section class="about-section">
+    <div class="container">
+        <h2 class="section-title">The Faces Behind InfoHub</h2>
+        
+        <div class="row justify-content-center">
+            <!-- Owner 1 -->
+            <div class="col-md-5 mb-4">
+                <div class="owner-card">
+                    <img src="{% static 'assets/images/comment-author-01.jpg' %}" class="owner-img" alt="Owner Name">
+                    <h3 class="owner-name">Founder Name 1</h3>
+                    <span class="owner-role">Lead Developer & CEO</span>
+                    <p class="owner-bio">
+                        Full-stack developer passionate about building scalable web applications. 
+                        Handles the technical architecture and backend magic of the site.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Owner 2 -->
+            <div class="col-md-5 mb-4">
+                <div class="owner-card">
+                    <img src="{% static 'assets/images/comment-author-02.jpg' %}" class="owner-img" alt="Owner Name">
+                    <h3 class="owner-name">Founder Name 2</h3>
+                    <span class="owner-role">Content Director & Marketing</span>
+                    <p class="owner-bio">
+                        A storyteller at heart with a focus on editorial strategy and growth. 
+                        Ensures every story published meets our high quality standards.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    {% endblock %}

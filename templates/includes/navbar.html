@@ -13,11 +13,11 @@
                   <span class="sr-only">(current)</span>
                 </a>
               <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
+                <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
               </li>
               </li> 
               <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
+                <a class="nav-link" href="{% url 'about' %}">About Us</a>
               </li>
               
               <!-- <li class="nav-item">
@@ -42,7 +42,7 @@
                     <p class="small">Welcome</p>
                 </div>
                 <div class="row my-0">
-                    <p class="col text-muted small"><a href="{% url 'dashboard' %}">Register</a></p>|
+                    <p class="col text-muted small"><a href="{% url 'register' %}">Register</a></p>|
                     <p class="col text-muted small"><a href="{% url 'logout' %}">Login</a></p>
                 </div>
               </div>

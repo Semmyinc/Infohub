@@ -1,4 +1,7 @@
 from django.db import models
+
+# Create your models here.
+from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Create your models here.
@@ -38,7 +41,7 @@ class UsersManager(BaseUserManager):
         user.is_active = True
         user.is_staff = True
         # user.is_superadmin = True #Had this commented during my personal research to make my custom usermodel work effectively
-        is_superuser = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -73,9 +76,9 @@ class Users(AbstractBaseUser, PermissionsMixin):
         return self.email
     
     # def has_perm(self, perm, obj=None):
-    #     return self.is_admin
+    #     return self.is_superuser or self.is_admin
     
-    # def has_module_perms(self, add_label):
+    # def has_module_perms(self, app_label):
     #     return True
     
 
@@ -84,10 +87,12 @@ class Users(AbstractBaseUser, PermissionsMixin):
 
     def fullname(self):
         return f'{self.first_name} {self.last_name}'
+    
 
 sex = (
-    ('male', 'male'),
-    ('female', 'female'),
+('male', 'male'),
+('female', 'female'),
+
 )
 class Profile(models.Model):
     user = models.OneToOneField(Users, on_delete=models.CASCADE)

@@ -3,52 +3,102 @@
 {% block content %}
     <div class="container">
         <br><br><br><br><br>
-        <div class="card text-center mx-auto">
-            <h3 class="card-header">Users <a href="{% url 'register' %}" class="small float-right"><i class="fas fa-plus small"></i></a></h3>
-            <div class="row">
-                <div class="col-2">
+        <div class="container-fluid py-4">
+    <div class="card border-0 shadow-sm">
+        <!-- Header: Consistent with Stories and Categories -->
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold text-dark">User Management</h5>
+            <a href="#" class="btn btn-primary btn-sm rounded-pill px-3">
+                <i class="fas fa-user-plus me-1"></i> Add User
+            </a>
+        </div>
+
+        <div class="row g-0">
+            <!-- Sidebar Column: Maintains the bg-light and border-end -->
+            <div class="col-md-2 border-end bg-light">
+                <div class="py-2">
                     {% include 'includes/dashboard_sidebar.html' %}
                 </div>
-                <div class="col-10 py-3 px-auto">
-                    <table class="table table-borderless">
-                        <thead>
+            </div>
+
+            <!-- Table Column -->
+            <div class="col-md-10">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light text-muted small text-uppercase">
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">email</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Active</th>
-                                <th scope="col">Staff</th>
-                                <th scope="col">Superuser</th>
-                                <th scope="col">Action</th>
+                                <th class="ps-4">#</th>
+                                <th>Full Name</th>
+                                <th>Email / Username</th>
+                                <th>Phone</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Role</th>
+                                <th class="text-end pe-4">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for person in users %}
-                             
-                                <tr>
-                                    <td>{{forloop.counter}}</td>
-                                    <td>{{person.first_name}} {{person.last_name}}</td>
-                                    <td>{{person.email}}</td>
-                                    <td>{{person.username}}</td>
-                                    <td>{{person.phone}}</td>
-                                    <td>
-                                        {% if person.is_active == True %} <i class="fas fa-check text-success"></i>{% else %} <i class="fas fa-times text-danger"></i>{% endif %}
-                                    </td>
-                                    <td>
-                                        {% if person.is_staff %} <i class="fas fa-check text-success"></i>{% else %} <i class="fas fa-times text-danger"></i>{% endif %}
-                                    </td>
-                                    <td>
-                                        {% if person.is_superuser %} <i class="fas fa-check text-success"></i>{% else %} <i class="fas fa-times text-danger"></i>{% endif %}
-                                    </td>
-                                    <td><a href="#" class="text-success"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="text-danger"><i class="fas fa-trash"></i></a></td>
-                                </tr>
+                            <tr>
+                                <td class="ps-4 text-muted">{{forloop.counter}}</td>
+                                <td>
+                                    <div class="fw-bold text-dark">{{person.first_name}} {{person.last_name}}</div>
+                                    <small class="text-muted">@{{person.username}}</small>
+                                </td>
+                                <td>
+                                    <div class="small">{{person.email}}</div>
+                                </td>
+                                <td class="small">{{person.phone|default:"--"}}</td>
+                                <td class="text-center">
+                                    {% if person.is_active %}
+                                        <span class="badge rounded-pill bg-success-soft text-success">Active</span>
+                                    {% else %}
+                                        <span class="badge rounded-pill bg-danger-soft text-danger">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% if person.is_superuser %}
+                                        <span class="badge bg-dark">Superuser</span>
+                                    {% elif person.is_staff %}
+                                        <span class="badge bg-info text-white">Staff</span>
+                                    {% else %}
+                                        <span class="badge bg-light text-muted border">Member</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group">
+                                        <a href="#" class="btn btn-sm btn-outline-success border-0">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-outline-danger border-0" onclick="return confirm('Are you sure you want to remove this user?')">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<style>
+    /* Consistent soft badge styling */
+    .bg-success-soft { background-color: #e1fcef; color: #00d97e; }
+    .bg-danger-soft { background-color: #ffe5e5; color: #f2545b; }
+    
+    /* Table hover and typography */
+    .table-hover tbody tr:hover { background-color: #f8f9fa; }
+    thead th { 
+        font-weight: 600; 
+        letter-spacing: 0.5px; 
+        border-bottom: 1px solid #edf2f9 !important; 
+        font-size: 0.75rem;
+    }
+    .border-end { border-right: 1px solid #edf2f9 !important; }
+</style>
+
     </div>
 {% endblock %}

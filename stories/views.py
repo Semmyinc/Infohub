@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Blog, Category
+from .models import Blog, Category, Comment, CommentReply
 from django.contrib import messages
 from .forms import CategoryForm, StoryForm
 from django.urls import reverse
@@ -141,13 +141,6 @@ def categories(request):
     context = {}
     return render(request, 'stories/categories.html', context)
 
-def home(request):
-    stories = Blog.objects.filter(status='published').order_by('-created_at')
-    # stories = Blog.objects.all()
-    context = {'stories':stories}
-    # return HttpResponse("Ok")
-    return render(request, 'home.html', context)
-
 def stories(request):
     stories = Blog.objects.all()
     context = {'stories':stories}
@@ -155,8 +148,35 @@ def stories(request):
 
 def story(request, slug):
     blog = get_object_or_404(Blog, slug=slug, status='published')
-    context = {'blog':blog}
+    
+    
+    if request.method == 'POST':
+        comment = Comment()
+        comment.blog = blog
+        comment.user = request.user
+        comment.body = request.POST['message']
+        comment.save()
+
+    comments = Comment.objects.filter(blog=blog)        
+    comments_count = comments.count() 
+
+    context = {'blog':blog, 'comments':comments, 'comments_count':comments_count}
     return render(request, 'stories/story.html', context)
+
+# def comment_reply(request, slug, pk):
+#     blog = get_object_or_404(Blog, slug=slug, status='published')
+#     # comments = Comment.objects.filter(blog=blog)
+    
+#     if request.method =='POST':
+#         comment_reply = CommentReply()
+#         comment_reply.user = request.user
+#         comment_reply.body = request.POST['reply']
+#         comment_reply.save()
+
+#     comment = Comment.objects.get(blog=blog, id=pk)
+#     comment_reply = CommentReply.filter(comment=comment)
+#     context = {'comment_reply':comment_reply, 'comment':comment}
+#     return render(request, 'stories/comment_reply.html', context)
 
 def category_posts(request, slug):
     try:
@@ -168,4 +188,3 @@ def category_posts(request, slug):
         return redirect('home')
     context = {'category_posts':category_posts}
     return render(request, 'category_posts.html', context)
-

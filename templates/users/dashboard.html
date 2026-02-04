@@ -3,30 +3,73 @@
 {% block content %}
     <div class="container">
         <br><br><br><br><br>
-        <div class="card text-center mx-auto">
-            <h3 class="card-header">Dashboard</h3>
-            <div class="row">
-                <div class="col-3 bg-light my-3">
+        <div class="container-fluid py-4">
+    <div class="card border-0 shadow-sm">
+        <!-- Modern Header consistent with management pages -->
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-bold text-dark">Dashboard Overview</h5>
+        </div>
+
+        <div class="row g-0">
+            <!-- Sidebar Column: Identical styling to previous pages -->
+            <div class="col-md-3 border-end bg-light">
+                <div class="py-2">
                     {% include 'includes/dashboard_sidebar.html' %}
                 </div>
-                <div class="col-9 py-3">
-                    <div class="row mx-auto">
-                        <div class="col">
-                            <div class="card">
-                                <h6 class="card-header">All Categories</h6>
-                                <div class="py-2 mb-2">{{category_count}}</div>
+            </div>
+
+            <!-- Stats Content Column -->
+            <div class="col-md-9 py-4 px-4">
+                <div class="row g-4">
+                    <!-- Categories Stats Card -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card border-0 shadow-sm h-100 bg-primary-soft">
+                            <div class="card-body p-4 text-center">
+                                <div class="icon-shape bg-primary text-white rounded-circle mb-3 mx-auto">
+                                    <i class="fas fa-folder"></i>
+                                </div>
+                                <h6 class="text-muted text-uppercase small fw-bold">All Categories</h6>
+                                <h2 class="fw-bold mb-0">{{category_count}}</h2>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="card">
-                                <h6 class="card-header">All Stories</h6>
-                                <div class="py-2 mb-2">{{story_count}}</div>
+                    </div>
+
+                    <!-- Stories Stats Card -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card border-0 shadow-sm h-100 bg-success-soft">
+                            <div class="card-body p-4 text-center">
+                                <div class="icon-shape bg-success text-white rounded-circle mb-3 mx-auto">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h6 class="text-muted text-uppercase small fw-bold">All Stories</h6>
+                                <h2 class="fw-bold mb-0">{{story_count}}</h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<style>
+    /* Soft color accents for the cards */
+    .bg-primary-soft { background-color: #eef2ff; border: 1px solid #e0e7ff !important; }
+    .bg-success-soft { background-color: #f0fdf4; border: 1px solid #dcfce7 !important; }
+    
+    /* Icon styling */
+    .icon-shape {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+    }
+
+    /* Sidebar Border Consistency */
+    .border-end { border-right: 1px solid #edf2f9 !important; }
+</style>
     </div>
 {% endblock %}
                                                         
