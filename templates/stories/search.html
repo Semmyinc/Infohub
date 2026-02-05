@@ -32,66 +32,8 @@
               <div class="row">
                 {% if searched %}
                     {% for item in searched %}
-                        <style>
-  /* Uniform Grid & Hover Effects */
-  .blog-post {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid #eee;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
-  }
-  .blog-post:hover { transform: translateY(-5px); }
+                      
   
-  .blog-thumb img {
-    height: 200px;
-    width: 100%;
-    object-fit: cover; /* Ensures uniform image width/height */
-  }
-
-  .down-content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* Pushes meta-info and tags to align at the bottom */
-    padding: 25px !important;
-  }
-
-  .post-options {
-    margin-top: auto; /* Forces tags to the bottom of the card */
-    padding-top: 15px;
-    border-top: 1px solid #f8f8f8;
-  }
-
-  /* 3. Modern Pagination */
-  .pagination {
-    margin-top: 40px;
-    justify-content: center;
-    gap: 5px;
-  }
-  .step-links a {
-    background: #fff;
-    color: #20232e;
-    padding: 10px 18px;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
-  }
-  .step-links a:hover {
-    background: #f48840;
-    color: #fff;
-    border-color: #f48840;
-  }
-  .current {
-    padding: 10px 18px;
-    font-weight: 700;
-    color: #f48840;
-  }
-</style>
 
 <div class="row">
     {% if searched %}

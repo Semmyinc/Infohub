@@ -38,7 +38,7 @@ def search(request):
         paged_search = paginator.get_page(1)
     except EmptyPage:
         paged_search = paginator.get_page(paginator.num_pages)
-                                         
+                                        
     search_count = searched.count()
 
     context = {'searched':paged_search, 'search_count':search_count}
