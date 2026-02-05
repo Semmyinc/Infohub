@@ -6,8 +6,14 @@
         <div class="container-fluid py-4">
     <div class="card border-0 shadow-sm">
         <!-- Modern Header consistent with management pages -->
-        <div class="card-header bg-white py-3">
+        <!-- <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-bold text-dark">Dashboard Overview <span class="float-right text-muted small">logged in as {{request.user.fullname}}</span></h5>
+        </div> -->
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 fw-bold text-dark">Dashboard Overview</h5>
+            <a href="{% url 'add_story' %}" class="btn btn-primary btn-sm rounded-pill px-3">
+                <i class="fas fa-circle-user"></i> logged in as {{request.user.fullname}}
+            </a>
         </div>
 
         <div class="row g-0">
@@ -46,50 +52,29 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Users Stats Card -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card border-0 shadow-sm h-100 bg-warning-soft">
+                            <div class="card-body p-4 text-center">
+                                <div class="icon-shape bg-warning text-white rounded-circle mb-3 mx-auto">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <h6 class="text-muted text-uppercase small fw-bold">All Users</h6>
+                                <h2 class="fw-bold mb-0">{{user_count}}</h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    /* Soft color accents for the cards */
-    .bg-primary-soft { background-color: #eef2ff; border: 1px solid #e0e7ff !important; }
-    .bg-success-soft { background-color: #f0fdf4; border: 1px solid #dcfce7 !important; }
-    
-    /* Icon styling */
-    .icon-shape {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-    }
 
-    /* Sidebar Border Consistency */
-    .border-end { border-right: 1px solid #edf2f9 !important; }
-</style>
     </div>
 {% endblock %}
                                                         
-<<table class="table table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" align="right">Product</th>
-                                            <!-- <th scope="col">Product Name</th> -->
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                                <tr>
-                                                    <td scope="row g-0">
-                                                    </td>
-                                                </tr>
-                                    </tbody>
-                                </table>
+
 
 

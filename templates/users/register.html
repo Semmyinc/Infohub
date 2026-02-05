@@ -1,35 +1,84 @@
 {% extends 'includes/base.html' %}
 
 {% block content %}
-    <div class="container">
-        <br><br><br><br><br>
-        <div class="article mx-auto text-center" style="width: 520px;">
-            <form action="" method="POST">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col card-title text-center">User Registration</div>
-                    
-                </div>
-                <div class="row mb-3">
-                    <div class="col">{{form.first_name}}</div>
-                    <div class="col">{{form.last_name}}</div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col card-title text-center">{{form.email}}</div>
-                    
-                </div>
-                <div class="row mb-3">
-                    <div class="col">{{form.username}}</div>
-                    <div class="col">{{form.phone}}</div>
-                </div>
 
-                <div class="row mb-3">
-                    <div class="col">{{form.password}}</div>
-                    <div class="col">{{form.confirm_password}}</div>
-                </div>
-                <button type="submit" class="btn btn-small btn-secondary">Register</button>
-            </form>
+{% load widget_tweaks %}
 
-        </div>
+ 
+
+<div class="container">
+    <div class="register-card">
+        <form action="" method="POST">
+            {% csrf_token %}
+            
+            <div class="text-center">
+                <div class="form-title">User Registration</div>
+            </div>
+
+            <!-- Display non-field errors at the top -->
+            {% if form.non_field_errors %}
+                <ul class="errorlist">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name|add_class:"form-control" }}
+                    {{ form.first_name.errors }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name|add_class:"form-control" }}
+                    {{ form.last_name.errors }}
+                </div>
+            </div>
+            
+            <!-- Email input (full width) -->
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    {{ form.email.label_tag }}
+                    {{ form.email|add_class:"form-control" }}
+                    {{ form.email.errors }}
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    {{ form.username.label_tag }}
+                    {{ form.username|add_class:"form-control" }}
+                    {{ form.username.errors }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.phone.label_tag }}
+                    {{ form.phone|add_class:"form-control" }}
+                    {{ form.phone.errors }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    {{ form.password.label_tag }}
+                    {{ form.password|add_class:"form-control" }}
+                    {{ form.password.errors }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.confirm_password.label_tag }}
+                    {{ form.confirm_password|add_class:"form-control" }}
+                    {{ form.confirm_password.errors }}
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="form-submit-btn">Create Account</button>
+            </div>
+            
+        </form>
     </div>
+</div>
+
+
 {% endblock %}

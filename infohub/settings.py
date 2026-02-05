@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'fontawesomefree',
     'team',
+    'widget_tweaks',
     
 ]
 

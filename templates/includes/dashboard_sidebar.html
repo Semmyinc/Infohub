@@ -12,7 +12,7 @@
 <div class="card shadow-sm border-0 sticky-top" style="top: 20px; overflow: hidden; border-radius: 12px;">
     <div class="card-header bg-white py-3 border-bottom-0">
         <h6 class="mb-0 text-uppercase fw-bold text-muted small" style="letter-spacing: 1px;">
-            <i class="fas fa-bars-staggered me-2"></i>Management
+            <i class="fas fa-bars-staggered me-2"></i> &nbsp;Management
         </h6>
     </div>
     
@@ -20,26 +20,26 @@
         <!-- Dashboard -->
         <a href="{% url 'dashboard' %}" 
            class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex align-items-center {% if request.path == '/users/dashboard/' %}active{% endif %}">
-            <i class="fas fa-th-large fa-fw me-3"></i> Dashboard
+            <i class="fas fa-th-large fa-fw me-3"></i>&nbsp; Dashboard
         </a>
 
         <!-- Categories -->
         <a href="{% url 'dashboard_categories' %}" 
            class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex align-items-center {% if 'dashboard_categories' in request.path %}active{% endif %}">
-            <i class="fas fa-folder fa-fw me-3"></i> Categories
+            <i class="fas fa-folder fa-fw me-3"></i>&nbsp; Categories
         </a>
 
         <!-- Stories -->
         <a href="{% url 'dashboard_stories' %}" 
            class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex align-items-center {% if 'dashboard_stories' in request.path %}active{% endif %}">
-            <i class="fas fa-book-open fa-fw me-3"></i> Stories
+            <i class="fas fa-book-open fa-fw me-3"></i>&nbsp; Stories
         </a>
 
         <!-- Admin Only: Users -->
         {% if request.user.groups.all.0.name == 'manager' or request.user.is_superuser %}
         <a href="{% url 'dashboard_users' %}" 
            class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex align-items-center {% if 'dashboard_users' in request.path %}active{% endif %}">
-            <i class="fas fa-users fa-fw me-3"></i> Users
+            <i class="fas fa-users fa-fw me-3"></i>&nbsp; Users
         </a>
         {% endif %}
         
@@ -47,43 +47,9 @@
         <div class="px-4 py-2 mt-2"><hr class="my-0 opacity-10"></div>
         
         <!-- Settings Example -->
-        <a href="#" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex align-items-center">
-            <i class="fas fa-cog fa-fw me-3"></i> Settings
+        <a href="{% url 'logout' %}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex align-items-center">
+            <i class="fas fa-power-off"></i>&nbsp; Log Out
         </a>
     </div>
 </div>
 
-<style>
-    /* 1. Base Styling */
-    .list-group-item-action {
-        color: #6c757d;
-        font-weight: 500;
-        transition: all 0.2s ease-in-out;
-        border-left: 4px solid transparent !important; /* Invisible bar by default */
-    }
-
-    /* 2. Hover Effect - Sliding Highlight */
-    .list-group-item-action:hover {
-        background-color: #f8f9fa;
-        color: #f48840; /* Theme Orange */
-        padding-left: 1.75rem !important; /* Gentle slide-in effect */
-    }
-
-    /* 3. Active State - Vertical Indicator Bar */
-    .list-group-item-action.active {
-        background-color: rgba(244, 136, 64, 0.08) !important; /* Soft orange tint */
-        color: #f48840 !important;
-        border-left: 4px solid #f48840 !important; /* The beautiful highlight bar */
-        font-weight: 700;
-    }
-
-    /* 4. Icon Sizing */
-    .list-group-item-action i {
-        font-size: 1.1rem;
-        opacity: 0.8;
-    }
-    
-    .list-group-item-action.active i {
-        opacity: 1;
-    }
-</style>

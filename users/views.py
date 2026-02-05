@@ -19,9 +19,11 @@ from django.core.mail import EmailMessage
 def dashboard(request):
     categories = Category.objects.all()
     stories = Blog.objects.all()
+    users = Users.objects.all()
     category_count = categories.count()
-    story_count = stories.count
-    context = {'category_count':category_count, 'story_count':story_count}
+    story_count = stories.count()
+    user_count = users.count()
+    context = {'category_count':category_count, 'story_count':story_count, 'user_count':user_count}
     return render(request, 'users/dashboard.html', context)
 
 def dashboard_categories(request):

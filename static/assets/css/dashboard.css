@@ -1,0 +1,16 @@
+/* Soft color accents for the cards */
+    .bg-primary-soft { background-color: #eef2ff; border: 1px solid #e0e7ff !important; }
+    .bg-success-soft { background-color: #f0fdf4; border: 1px solid #dcfce7 !important; }
+    
+    /* Icon styling */
+    .icon-shape {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+    }
+
+    /* Sidebar Border Consistency */
+    .border-end { border-right: 1px solid #edf2f9 !important; }

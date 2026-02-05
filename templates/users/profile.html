@@ -1,59 +1,84 @@
 {% extends 'includes/base.html' %}
 
 {% block content %}
+
+
+<div class="profile-container">
     <div class="container">
-        <br><br><br><br><br>
-        <div class="article mx-auto text-center" style="width: 300px;">
+        <div class="profile-card mx-auto">
             <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="col card-title text-center">My Profile</div>                   
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col">
-                        <img src="" alt="">
-                    </div>
-                    <div class="col">{{profileform.gender}}</div>  
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col card-title text-center">
-                        {{userform.first_name}}
-                    </div>
-                    <div class="col card-title text-center">
-                        {{userform.last_name}}
-                    </div>
-                </div>
                 
-                <div class="row mb-3">
-                    <div class="col card-title text-center">
-                        {{userform.username}}
+                <div class="text-center">
+                    <h2 style="font-weight: 900; margin-bottom: 40px;">MY <span>PROFILE</span></h2>
+                    
+                    <!-- Avatar Section -->
+                    <div class="avatar-upload">
+                        <img src="{{ user.profile.image.url }}" class="profile-img" alt="Profile Picture">
+                        <div class="mx-auto" style="max-width: 250px;">
+                            {{ profileform.image }} <!-- Assuming you have an image field -->
+                        </div>
                     </div>
-                    <div class="col card-title text-center">
-                        {{userform.phone}}
-                    </div>
-                    <div class="col card-title text-center">
-                        {{userform.email}}
-                    </div>
-                </div>   
+                </div>
 
+                <!-- Personal Information -->
+                <div class="section-title">Personal Information</div>
                 <div class="row mb-3">
-                    <div class="col card-title text-center">
-                        {{profileform.address}}
+                    <div class="col-md-4">
+                        <label>First Name</label>
+                        {{ userform.first_name }}
                     </div>
-                    <div class="col card-title text-center">
-                        {{profileform.city}}
+                    <div class="col-md-4">
+                        <label>Last Name</label>
+                        {{ userform.last_name }}
                     </div>
-                    <div class="col card-title text-center">
-                        {{profileform.state}}   #to be completed
+                    <div class="col-md-4">
+                        <label>Gender</label>
+                        {{ profileform.gender }}
                     </div>
-                </div>   
-                
-                <button type="submit" class="btn btn-small btn-secondary">Update</button>
+                </div>
+
+                <!-- Contact Details -->
+                <div class="section-title">Contact Details</div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label>Username</label>
+                        {{ userform.username }}
+                    </div>
+                    <div class="col-md-4">
+                        <label>Phone Number</label>
+                        {{ userform.phone }}
+                    </div>
+                    <div class="col-md-4">
+                        <label>Email Address</label>
+                        {{ userform.email }}
+                    </div>
+                </div>
+
+                <!-- Location Details -->
+                <div class="section-title">Location Information</div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label>Street Address</label>
+                        {{ profileform.address }}
+                    </div>
+                    <div class="col-md-4">
+                        <label>City</label>
+                        {{ profileform.city }}
+                    </div>
+                    <div class="col-md-4">
+                        <label>State</label>
+                        {{ profileform.state }}
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn-update">Save Profile Changes</button>
+                </div>
             </form>
-
         </div>
     </div>
+</div>
+
 {% endblock %}
 

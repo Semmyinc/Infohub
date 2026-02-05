@@ -45,7 +45,7 @@ class Blog(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='comments')
     body = models.TextField()
     image = models.ImageField(upload_to='uploads/profile_pic/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

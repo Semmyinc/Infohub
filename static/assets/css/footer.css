@@ -1,0 +1,64 @@
+ /* 1. Modern Footer Layout */
+  footer {
+    background-color: #1a1a1a; /* Deeper, premium dark */
+    padding: 80px 0 40px;
+    margin-top: 60px;
+    text-align: center;
+  }
+
+  /* 2. InfoHub Brand Rebrand */
+  .footer-logo {
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -1px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+  }
+  .footer-logo span {
+    color: #f48840; /* Signature Accent */
+    font-weight: 300;
+  }
+
+  /* 3. Modern Social Links */
+  .social-icons {
+    margin-bottom: 40px;
+    padding: 0;
+    list-style: none;
+  }
+  .social-icons li {
+    display: inline-block;
+    margin: 0 15px;
+  }
+  .social-icons li a {
+    color: #888;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    text-decoration: none;
+  }
+  .social-icons li a:hover {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
+  }
+
+  /* 4. Refined Copyright */
+  .copyright-text {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 30px;
+  }
+  .copyright-text p {
+    color: #555;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+  }
+  .copyright-text a {
+    color: #777;
+    transition: 0.3s;
+  }
+  .copyright-text a:hover {
+    color: #f48840;
+  }

@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 
@@ -28,10 +29,19 @@ def search(request):
                                      |Q(is_featured__icontains=keyword)
                                      |Q(created_at__icontains=keyword)
                                      |Q(modified_at__icontains=keyword)
-                                     )
+        )
+    paginator = Paginator(searched, 2)
+    page_number = request.GET.get('page')
+    try:
+        paged_search = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        paged_search = paginator.get_page(1)
+    except EmptyPage:
+        paged_search = paginator.get_page(paginator.num_pages)
+                                         
     search_count = searched.count()
 
-    context = {'searched':searched, 'search_count':search_count}
+    context = {'searched':paged_search, 'search_count':search_count}
     return render(request, 'stories/search.html', context)
 
 # function to create a new blog
@@ -142,9 +152,20 @@ def categories(request):
     return render(request, 'stories/categories.html', context)
 
 def stories(request):
-    stories = Blog.objects.all()
-    context = {'stories':stories}
+    stories = Blog.objects.all().order_by('-created_at')
+    paginator = Paginator(stories, 2)
+    page_number = request.GET.get('page')
+    try:
+        paged_stories = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        paged_stories = paginator.get_page(1)
+    except EmptyPage:
+        paged_stories = paginator.get_page(paginator.num_pages)
+        
+    context = {'stories':paged_stories}
     return render(request, 'stories/stories.html', context)
+
+    
 
 def story(request, slug):
     blog = get_object_or_404(Blog, slug=slug, status='published')
@@ -186,5 +207,15 @@ def category_posts(request, slug):
     except Blog.DoesNotExist:
         messages.warning(request, f'Post(s) in this category is/are not available yet')
         return redirect('home')
-    context = {'category_posts':category_posts}
+    
+    paginator = Paginator(category_posts, 2)
+    page_number = request.GET.get('page')
+    try:
+        paged_category_posts = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        paged_category_posts = paginator.get_page(1)
+    except EmptyPage:
+        paged_category_posts = paginator.get_page(paginator.num_pages)
+    
+    context = {'category_posts':paged_category_posts}
     return render(request, 'category_posts.html', context)

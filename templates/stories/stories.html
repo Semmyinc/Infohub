@@ -3,236 +3,153 @@
 
 {% load static %}
 <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
-    <!-- ***** Preloader End ***** -->
 
-    <!-- Page Content -->
-    <!-- Banner Starts Here -->
-    <div class="heading-page header-text">
-      <section class="page-heading">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="text-content">
-                <h4>Recent Posts</h4>
-                <h2>Our Recent Blog Entries</h2>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
 
-    <section class="blog-posts grid-system">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8">
-            <div class="all-blog-posts">
-              <div class="row">
-                {% if stories %}
-                    {% for story in stories %}
-                        <div class="col-lg-6">
-                        <div class="blog-post">
-                            <div class="blog-thumb">
-                              {% if story.image_pg %}
-                                <img src="{{story.image_pg.url}}" alt="">
-                              {% else %}
-                                <img src="{% static 'assets/images/blog_default.jpg' %}" alt="">
-                              {% endif %}
-                            </div>
-                            <div class="down-content">
-                            <span>{{story.category}}</span>
-                            <a href="{% url 'story' story.slug %}"><h4>{{story.name}}</h4></a>
-                            <ul class="post-info">
-                                <li><a href="#">{{story.author.username}}</a></li>
-                                <li><a href="#">{{story.created_at | timesince}} ago</a></li>
-                                <li><a href="#">12 Comments</a></li>
-                            </ul>
-                            <p>{{story.summary | slice:':100'}}</p>
-                            <div class="post-options">
-                                <div class="row">
-                                <div class="col-lg-12">
-                                    <ul class="post-tags">
-                                    <li><i class="fa fa-tags"></i></li>
-                                    <li><a href="#">Best Templates</a>,</li>
-                                    <li><a href="#">TemplateMo</a></li>
-                                    </ul>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                        <p class="card-text">There are no stories yet. <a href="{% url 'add_story' %}">Create One</a></p>
-                {% endif %}
-
-                
-                <div class="col-lg-12">
-                  <ul class="page-numbers">
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            {% include 'includes/sidebar.html' %}
+<div class="heading-page header-text">
+  <section class="page-heading">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="text-content">
+            <h4>Recent Posts</h4>
+            <h2>Our Recent Blog Entries</h2>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
+</div>
+
+<section class="blog-posts grid-system">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="all-blog-posts">
+          <div class="row">
+            {% if stories %}
+                {% for story in stories %}
+                    <div class="col-lg-6 d-flex align-items-stretch"> <!-- Stretch for equal height -->
+                    <div class="blog-post">
+                        <div class="blog-thumb">
+                          {% if story.image_pg %}
+                            <img src="{{story.image_pg.url}}" alt="{{story.name}}">
+                          {% else %}
+                            <img src="{% static 'assets/images/blog_default.jpg' %}" alt="default">
+                          {% endif %}
+                        </div>
+                        <div class="down-content">
+                          <span>{{story.category}}</span>
+                          <a href="{% url 'story' story.slug %}"><h4>{{story.name}}</h4></a>
+                          <ul class="post-info">
+                              <li><a href="#">{{story.author.username}}</a></li>
+                              <li><a href="#">{{story.created_at|timesince}}</a></li>
+                          </ul>
+                          <p>{{story.summary|slice:':80'}}...</p>
+                          <div class="post-options" style="margin-top:auto;"> <!-- Pushes tags to bottom -->
+                              <ul class="post-tags">
+                                <li><i class="fa fa-tags" style="color:#f48840"></i></li>
+                                <li><a href="#">{{story.category}}</a></li>
+                              </ul>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-lg-12 text-center py-5">
+                    <h3 class="text-muted">No stories found.</h3>
+                    <a href="{% url 'add_story' %}" class="btn btn-orange mt-3">Create One</a>
+                </div>
+            {% endif %}
+
+            <!-- Pagination -->
+            <div class="col-lg-12">
+              <div class="pagination">
+                <span class="step-links">
+                  {% if stories.has_previous %}
+                    <a href="?page=1">First</a>
+                    <a href="?page={{stories.previous_page_number}}">Prev</a>
+                  {% endif %}
+                  
+                  <span class="current">{{stories.number}} / {{stories.paginator.num_pages}}</span>
+
+                  {% if stories.has_next %}
+                    <a href="?page={{stories.next_page_number}}">Next</a>
+                    <a href="?page={{stories.paginator.num_pages}}">Last</a>
+                  {% endif %}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar remains exactly as it was -->
+      <div class="col-lg-4">
+        {% include 'includes/sidebar.html' %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
 {% endblock %}
 
 
-<div class="col-lg-6">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      <img src="assets/images/blog-thumb-02.jpg" alt="">
-                    </div>
-                    <div class="down-content">
-                      <span>Lifestyle</span>
-                      <a href="post-details.html"><h4>Suspendisse et metus</h4></a>
-                      <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 22, 2020</a></li>
-                        <li><a href="#">26 Comments</a></li>
-                      </ul>
-                      <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-lg-12">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">Best Templates</a>,</li>
-                              <li><a href="#">TemplateMo</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      <img src="assets/images/blog-thumb-03.jpg" alt="">
-                    </div>
-                    <div class="down-content">
-                      <span>Lifestyle</span>
-                      <a href="post-details.html"><h4>Donec tincidunt leo</h4></a>
-                      <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 18, 2020</a></li>
-                        <li><a href="#">42 Comments</a></li>
-                      </ul>
-                      <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-lg-12">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">Best Templates</a>,</li>
-                              <li><a href="#">TemplateMo</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      <img src="assets/images/blog-thumb-04.jpg" alt="">
-                    </div>
-                    <div class="down-content">
-                      <span>Lifestyle</span>
-                      <a href="post-details.html"><h4>Mauris ac dolor ornare</h4></a>
-                      <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 16, 2020</a></li>
-                        <li><a href="#">28 Comments</a></li>
-                      </ul>
-                      <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-lg-12">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">Best Templates</a>,</li>
-                              <li><a href="#">TemplateMo</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      <img src="assets/images/blog-thumb-05.jpg" alt="">
-                    </div>
-                    <div class="down-content">
-                      <span>Lifestyle</span>
-                      <a href="post-details.html"><h4>Donec tincidunt leo</h4></a>
-                      <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 12, 2020</a></li>
-                        <li><a href="#">16 Comments</a></li>
-                      </ul>
-                      <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-lg-12">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">Best Templates</a>,</li>
-                              <li><a href="#">TemplateMo</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      <img src="assets/images/blog-thumb-06.jpg" alt="">
-                    </div>
-                    <div class="down-content">
-                      <span>Lifestyle</span>
-                      <a href="post-details.html"><h4>Mauris ac dolor ornare</h4></a>
-                      <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 10, 2020</a></li>
-                        <li><a href="#">3 Comments</a></li>
-                      </ul>
-                      <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-lg-12">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">Best Templates</a>,</li>
-                              <li><a href="#">TemplateMo</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+<!-- pagination style 1-->
+                  <!-- {% if stories.has_other_pages %}
+                    <ul class="page-numbers">
+
+                      {% if stories.has_previous %}
+                        <li class="page-item"><a href="?page={{stories.previous_page_number}}" class="page-link"></i>Previous</a></li>
+                      {% else %}
+                        <li class="page-item disabled"><a href="#" class="page-link"></i>Previous</a></li>
+                      {% endif %}
+
+                      {% for story_page in stories.paginator.page_range %}
+                        {% if stories.number == story_page %}
+                          <li class="page-item disabled"><a href="#" class="page-link">{{story_page}}</a></li>
+                        {% else %}
+                          <li class="page-item"><a href="?page={{story_page}}" class="page-link">{{story_page}}</a></li>
+                        {% endif %}
+                      {% endfor %}
+                      
+                      {% if stories.has_next %}
+                        <li class="page-item"><a href="?page={{stories.next_page_number}}" class="page-link"><i class="fa fa-angle-double-right"></i>Next</a></li>
+                      {% else %}
+                        <li class="page-item disabled"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i>Next</a></li>
+                      {% endif %}
+                    </ul>
+                  {% endif %} -->
+                  
+                  
+                  <!-- pagination style 2-->
+                  <!-- <nav class="mt-4" aria-label="page navigation sample">
+                      {% if stories.has_other_pages %}
+                          <ul class="pagination">
+                              
+                              {% if stories.has_previous %}
+                                  <li class="page-item"><a href="?page={{stories.previous_page_number}}" class="page-link">Previous</a></li>
+                              {% else %}
+                                  <li class="page-item disabled"><a href="#" class="page-link">Previous</a></li>
+                              {% endif %}
+
+                              
+                              {% for story_page in stories.paginator.page_range %}
+                                  {% if stories.number == story_page %}
+                                      <li class="page-item disabled"><a href="#" class="page-link">{{story_page}}</a></li>
+                                  {% else %}
+                                      <li class="page-item"><a href="?page={{story_page}}" class="page-link">{{story_page}}</a></li>
+                                  {% endif %}
+                              {% endfor %}
+
+
+                              {% if stories.has_next %}
+                                  <li class="page-item"><a href="?page={{stories.next_page_number}}" class="page-link">Next</a></li>
+                              {% else %}
+                                  <li class="page-item disabled"><a href="#" class="page-link">Next</a></li>
+                              {% endif %}
+                          </ul>
+                      {% endif %}
+                  </nav> -->

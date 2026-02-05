@@ -5,290 +5,111 @@
 
 <!-- {% load static %} -->
     <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
-    <!-- ***** Preloader End ***** -->
+    <!-- Banner Section Upgrade -->
+<div class="main-banner header-text">
+  <div class="container-fluid">
+    <div class="owl-banner owl-carousel">
+      {% if featured_stories %}
+        {% for story in featured_stories %}
+          <div class="item">
+            <div class="overlay-gradient"></div>
+            <img src="{{story.featured_image.url}}" class="banner-img" alt="">
+            <div class="item-content">
+              <div class="main-content">
+                <div class="meta-category">
+                  <span class="category-badge">{{story.category}}</span>
+                </div>
+                <a href="{% url 'story' story.slug %}"><h4 class="banner-title">{{story.name}}</h4></a>
+                <ul class="post-info-custom">
+                  <li><i class="far fa-user"></i> {{story.author}}</li>
+                  <li><i class="far fa-calendar"></i> {{story.created_at | timesince }} ago</li>                     
+                </ul>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}               
+    </div>
+  </div>
+</div>
 
-    
+<!-- Blog Post Section Upgrade -->
+<section class="blog-posts mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="all-blog-posts">
+          {% if stories %}
+            {% for story in stories %}
+              <div class="modern-blog-card mb-5">
+                <div class="blog-thumb">
+                  <img src="{{story.image.url}}" class="img-fluid" alt="{{story.name}}">
+                  <span class="card-category">{{story.category}}</span>
+                </div>
+                <div class="down-content p-4">
+                  <a href="{% url 'story' story.slug %}"><h3>{{story.name}}</h3></a>
+                  <ul class="post-info mb-3">
+                    <li><a href="#">{{story.author.username}}</a></li>
+                    <li><a href="#">{{story.created_at | timesince}} ago</a></li>
+                    {% if story.comments.count <= 1 %}
+                      <li><a href="#"><i class="far fa-comments"></i>{{story.comments.count}} comment</a></li>
+                    {% else %}
+                      <li><a href="#"><i class="far fa-comments"></i>&nbsp;&nbsp;{{story.comments.count}} comments</a></li>
+                    {% endif %}
 
-    <!-- Page Content -->
-    <!-- Banner Starts Here -->
-    <div class="main-banner header-text">
-      <div class="container-fluid">
-        <div class="owl-banner owl-carousel">
-          {% if featured_stories %}
-            {% for story in featured_stories %}
-              <div class="item">
-                <img src="{{story.featured_image.url}}" alt="">
-                <div class="item-content">
-                  <div class="main-content">
-                    <div class="meta-category">
-                      <span>{{story.category}}</span>
+                    {% if request.user == story.author %}
+                      <li class="admin-actions">
+                        <a href="{% url 'edit_story' story.slug %}" class="text-primary mx-2"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'delete_story' story.slug %}" class="text-danger"><i class="fas fa-trash"></i></a>
+                      </li>
+                    {% endif %}
+                  </ul>
+                  <p class="post-excerpt">{{story.body | slice:':150'}}...</p>
+                  <hr>
+                  <div class="post-options">
+                    <div class="row align-items-center">
+                      <div class="col-md-8">
+                        <ul class="post-tags">
+                          <li><i class="fa fa-tags"></i></li>
+                          <li>More <a href="{% url 'stories' %}">stories</a> here</li>
+                        </ul>
+                      </div>
+                      <div class="col-md-4 text-md-end">
+                        <a href="{% url 'story' story.slug %}" class="read-more-btn">Read more...</a>
+                      </div>
                     </div>
-                    <a href="#"><h4>{{story.name}}</h4></a>
-                    <ul class="post-info">
-                      <li><a href="#">{{story.author}}</a></li>
-                      <li><a href="#">{{story.created_at | timesince }}ago</a></li>                     
-                      <li><a href="#">0 Comment</a></li>
-                    </ul>
                   </div>
                 </div>
               </div>
             {% endfor %}
-          {% endif %}               
         </div>
+          <div class="pagination">
+          <span class="step-links">
+            {% if stories.has_previous %}
+              <a href="?page=1">First</a>
+              <a href="?page={{stories.previous_page_number}}">Prev</a>
+            {% endif %}
+            
+            <span class="current">{{stories.number}} / {{stories.paginator.num_pages}}</span>
+
+            {% if stories.has_next %}
+              <a href="?page={{stories.next_page_number}}">Next</a>
+              <a href="?page={{stories.paginator.num_pages}}">Last</a>
+            {% endif %}
+          </span>
+        </div>
+      </div>
+      {% endif %}
+      <div class="col-lg-4">
+        {% include 'includes/sidebar.html' %}
       </div>
     </div>
-    <!-- Banner Ends Here -->
-
-    <!-- <section class="call-to-action">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="main-content">
-              <div class="row">
-                <div class="col-lg-8">
-                  <span>Stand Blog HTML5 Template</span>
-                  <h4>Creative HTML Template For Bloggers!</h4>
-                </div>
-                <div class="col-lg-4">
-                  <div class="main-button">
-                    <a rel="nofollow" href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download Now!</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
-
-    
-    <section class="blog-posts">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8">
-            <div class="all-blog-posts">
-              {% if messages %}
-                  {% for message in messages %}
-                      <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-                          {{message}}
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                      </div>
-                  {% endfor %}
-              {% endif%}
-              <div class="row">
-                {% if stories %}
-                {% for story in stories %}
-                  <div class="col-lg-12">
-                    <div class="blog-post">
-                      
-                      <div class="blog-thumb">
-                        <img src="{{story.image.url}}" alt="">
-                      </div>
-                      <div class="down-content">
-                        <span>{{story.category}}</span>
-                        <a href="{% url 'story' story.slug %}"><h4>{{story.name}}</h4></a>
-                        <ul class="post-info">
-                          <li><a href="#">{{story.author.username}}</a></li>
-                          <li><a href="#">{{story.created_at | timesince}} ago</a></li>
-                          <li><a href="#">12 Comments</a></li>
-                          {% if request.user == story.author %}
-                            <li class="text-end"><a href="{% url 'edit_story' story.slug %}"><i class="fas fa-edit"></i></a></li>
-                            <li class="text-end"><a href="{% url 'delete_story' story.slug %}"><i class="fas fa-trash"></i></a></li>
-                          {% endif %}
-                        </ul>
-                        <p>{{story.body | slice:':150'}}<a rel="nofollow" href="https://templatemo.com/contact" target="_parent">Contact TemplateMo</a> for more info. Thank you.</p>
-                        <div class="post-options">
-                          <div class="row">
-                            <div class="col-6">
-                              <ul class="post-tags">
-                                <li><i class="fa fa-tags"></i></li>
-                                <li><a href="#">Beauty</a>,</li>
-                                <li><a href="#">Nature</a></li>
-                              </ul>
-                            </div>
-                            <div class="col-6">
-                              <ul class="post-share">
-                                <li><i class="fa fa-share-alt"></i></li>
-                                <li><a href="#">Facebook</a>,</li>
-                                <li><a href="#"> Twitter</a></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                {% endfor %}
-                {% endif %}
-                
-              </div>
-            </div>
-            <p class="card-text text-center">Something on your mind? <a href="{% url 'add_story' %}">Create Post</a></p>
-          </div>
-          <div class="col-lg-4">
-            {% include 'includes/sidebar.html' %}
-          </div>
-        </div>
-      </div>
-    </section>
-
+  </div>
+</section>
 {% endblock %}
 
 
-<div class="sidebar">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="sidebar-item search">
-                    <form id="search_form" name="gs" method="GET" action="#">
-                      <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
-                    </form>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item recent-posts">
-                    <div class="sidebar-heading">
-                      <h2>Recent Posts</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        {% if stories %}
-                          {% for story in stories %}
-                            <li>
-                                <a href="post-details.html">
-                                  <h5>{{story.name}}</h5>
-                                  <span>{{story.created_at | timesince}} ago</span>
-                                </a>
-                            </li>
-                          {% endfor %}
-                        {% endif %}
-                        <!-- <li><a href="post-details.html">
-                          <h5>Suspendisse et metus nec libero ultrices varius eget in risus</h5>
-                          <span>May 28, 2020</span>
-                        </a></li>
-                        <li><a href="post-details.html">
-                          <h5>Swag hella echo park leggings, shaman cornhole ethical coloring</h5>
-                          <span>May 14, 2020</span>
-                        </a></li> -->
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item categories">
-                    <div class="sidebar-heading">
-                      <h2>Categories</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        {% for category in categories %}
-                          <li><a href="">{{category}}</a></li>
-                        {% endfor %}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item tags">
-                    <div class="sidebar-heading">
-                      <h2>Tag Clouds</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Creative</a></li>
-                        <li><a href="#">HTML5</a></li>
-                        <li><a href="#">Inspiration</a></li>
-                        <li><a href="#">Motivation</a></li>
-                        <li><a href="#">PSD</a></li>
-                        <li><a href="#">Responsive</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
 
 
-<!-- <div class="col-lg-12">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      <img src="{% static 'assets/images/blog-post-02.jpg' %}" alt="">
-                    </div>
-                    <div class="down-content">
-                      <span>Healthy</span>
-                      <a href="post-details.html"><h4>Etiam id diam vitae lorem dictum</h4></a>
-                      <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 24, 2020</a></li>
-                        <li><a href="#">36 Comments</a></li>
-                      </ul>
-                      <p>You can support us by contributing a little via PayPal. Please contact <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">TemplateMo</a> via Live Chat or Email. If you have any question or feedback about this template, feel free to talk to us. Also, you may check other CSS templates such as <a rel="nofollow" href="https://templatemo.com/tag/multi-page" target="_parent">multi-page</a>, <a rel="nofollow" href="https://templatemo.com/tag/resume" target="_parent">resume</a>, <a rel="nofollow" href="https://templatemo.com/tag/video" target="_parent">video</a>, etc.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-6">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">Best Templates</a>,</li>
-                              <li><a href="#">TemplateMo</a></li>
-                            </ul>
-                          </div>
-                          <div class="col-6">
-                            <ul class="post-share">
-                              <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#">Twitter</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      <img src="{% static 'assets/images/blog-post-03.jpg' %}" alt="">
-                    </div>
-                    <div class="down-content">
-                      <span>Fashion</span>
-                      <a href="post-details.html"><h4>Donec tincidunt leo nec magna</h4></a>
-                      <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 14, 2020</a></li>
-                        <li><a href="#">48 Comments</a></li>
-                      </ul>
-                      <p>Nullam at quam ut lacus aliquam tempor vel sed ipsum. Donec pellentesque tincidunt imperdiet. Mauris sit amet justo vulputate, cursus massa congue, vestibulum odio. Aenean elit nunc, gravida in erat sit amet, feugiat viverra leo. Phasellus interdum, diam commodo egestas rhoncus, turpis nisi consectetur nibh, in vehicula eros orci vel neque.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-6">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">HTML CSS</a>,</li>
-                              <li><a href="#">Photoshop</a></li>
-                            </ul>
-                          </div>
-                          <div class="col-6">
-                            <ul class="post-share">
-                              <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#">Twitter</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="main-button">
-                    <a href="blog.html">View All Posts</a>
-                  </div>
-                </div> -->
+                  

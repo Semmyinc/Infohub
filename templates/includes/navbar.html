@@ -1,75 +1,73 @@
+
+
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <!-- Rebranded Logo -->
+    <a class="navbar-brand" href="/">
+      INFO<span>HUB</span><b class="brand-dot">.</b>
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link active" href="{% url 'about' %}">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- ***** Preloader Start ***** -->
+<div id="preloader">
+    <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>  
+<!-- ***** Preloader End ***** -->
+
 <!-- Header -->
-    <header class="">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="{% url 'home' %}"><h2>InfoHub<em>.</em></h2></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav mx-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
-              </li>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About Us</a>
-              </li>
-              
-              <!-- <li class="nav-item">
-                <a class="nav-link" href="post-details.html">Post Details</a>
-              </li> -->
-              
-            </ul>
-
-            {% if user.is_authenticated %}
-              <div class="mx-auto">
-                <div class="row mb-0 text-center">
-                    <p href="#" class="small">Welcome {{request.user.username}}</p>
-                </div>
-                <div class="row my-0">
-                    <p class="col text-muted small"><a href="{% url 'dashboard' %}">Dashboard</a></p>|
-                    <p class="col text-muted small"><a href="{% url 'logout' %}">Logout</a></p>
-                </div>
-              </div>
-            {% else %}
-              <div class="mx-auto">
-                <div class="row mb-0 text-center">
-                    <p class="small">Welcome</p>
-                </div>
-                <div class="row my-0">
-                    <p class="col text-muted small"><a href="{% url 'register' %}">Register</a></p>|
-                    <p class="col text-muted small"><a href="{% url 'logout' %}">Login</a></p>
-                </div>
-              </div>
-            {% endif %}
-
-            <ul class="navbar-nav ml-auto">
-                <!-- <li class="nav-item">
-                  <a class="nav-link" href="about.html">Login</a>
-                </li> -->
-                <li class="nav-item dropdown">
-                  {% if request.user.is_authenticated %}
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{request.user.fullname}}</a>
-                  {% else %}
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile User</a>
-                  {% endif %}
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% if request.user.is_authenticated %}
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                        {% else %}
-                            <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
-                            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
-                        {% endif %}
-                    </ul>
-                </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+<!-- <header class="">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><h2>Stand Blog<em>.</em></h2></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="blog.html">Blog Entries</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="post-details.html">Post Details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact Us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header> -->

@@ -1,0 +1,95 @@
+
+  /* 1. Refined Contact Section */
+  .down-contact {
+    background: #fff;
+    padding: 60px;
+    border-radius: 15px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.08); /* Soft Modern Shadow */
+    margin-top: -80px; /* Slight overlap with banner for depth */
+    position: relative;
+    z-index: 10;
+  }
+
+  /* 2. Modern Form Styling */
+  .contact-form input, 
+  .contact-form textarea {
+    width: 100%;
+    height: 50px;
+    border-radius: 8px !important;
+    border: 1px solid #eee !important;
+    background-color: #fcfcfc !important;
+    padding: 0 20px;
+    outline: none;
+    margin-bottom: 25px;
+    transition: all 0.3s;
+  }
+
+  .contact-form textarea {
+    height: 180px !important;
+    padding: 20px !important;
+  }
+
+  /* Focus effect - Blue/Orange glow */
+  .contact-form input:focus, 
+  .contact-form textarea:focus {
+    border-color: #f48840 !important;
+    background-color: #fff !important;
+    box-shadow: 0 5px 15px rgba(244, 136, 64, 0.1);
+  }
+
+  /* 3. Contact Info Styling */
+  .contact-information ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .contact-information ul li {
+    margin-bottom: 35px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f5f5f5;
+  }
+
+  .contact-information h5 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #20232e;
+    margin-bottom: 5px;
+  }
+
+  .contact-information span {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #f48840;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* 4. Button Upgrade */
+  .main-button {
+    background-color: #f48840;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 14px 30px;
+    border-radius: 30px;
+    border: none;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    width: 100%; /* Better on mobile */
+  }
+
+  .main-button:hover {
+    background-color: #fb9857;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(244, 136, 64, 0.2);
+  }
+
+  /* 5. Map Border Radius */
+  #map {
+    margin-top: 50px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+

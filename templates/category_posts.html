@@ -1,14 +1,10 @@
 {% extends 'includes/base.html' %}
 
 {% block content %}
+
+{% load static %}
     <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
+ 
     <!-- ***** Preloader End ***** -->
 
     <!-- Page Content -->
@@ -32,53 +28,65 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8">
-            <div class="all-blog-posts">
-              <div class="row">
-                {% if category_posts %}
-                    {% for post in category_posts %}
-                        <div class="col-lg-6">
-                        <div class="blog-post">
-                            <div class="blog-thumb">
-                            <img src="{{post.image_pg.url}}" alt="">
-                            </div>
-                            <div class="down-content">
-                            <span>{{post.category}}</span>
-                            <a href="{% url 'story' post.slug %}"><h4>{{post.name}}</h4></a>
-                            <ul class="post-info">
-                                <li><a href="#">{{post.author.username}}</a></li>
-                                <li><a href="#">{{post.created_at | timesince}} ago</a></li>
-                                <li><a href="#">12 Comments</a></li>
-                            </ul>
-                            <p>{{post.summary | slice:':100'}}</p>
-                            <div class="post-options">
-                                <div class="row">
-                                <div class="col-lg-12">
-                                    <ul class="post-tags">
-                                    <li><i class="fa fa-tags"></i></li>
-                                    <li><a href="#">Best Templates</a>,</li>
-                                    <li><a href="#">TemplateMo</a></li>
-                                    </ul>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
+        <div class="all-blog-posts">
+          <div class="row">
+            {% if category_posts %}
+                {% for post in category_posts %}
+                    <div class="col-lg-6 d-flex align-items-stretch"> <!-- Stretch for equal height -->
+                    <div class="blog-post">
+                        <div class="blog-thumb">
+                          {% if post.image_pg %}
+                            <img src="{{post.image_pg.url}}" alt="{{post.name}}">
+                          {% else %}
+                            <img src="{% static 'assets/images/blog_default.jpg' %}" alt="default">
+                          {% endif %}
                         </div>
+                        <div class="down-content">
+                          <span>{{post.category}}</span>
+                          <a href="{% url 'story' post.slug %}"><h4>{{post.name}}</h4></a>
+                          <ul class="post-info">
+                              <li><a href="#">{{post.author.username}}</a></li>
+                              <li><a href="#">{{post.created_at|timesince}}</a></li>
+                          </ul>
+                          <p>{{post.summary|slice:':80'}}...</p>
+                          <div class="post-options" style="margin-top:auto;"> <!-- Pushes tags to bottom -->
+                              <ul class="post-tags">
+                                <li><i class="fa fa-tags" style="color:#f48840"></i></li>
+                                <li><a href="#">{{post.category}}</a></li>
+                              </ul>
+                          </div>
                         </div>
-                    {% endfor %}
-                {% endif %}
-
-                
-                <div class="col-lg-12">
-                  <ul class="page-numbers">
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                  </ul>
+                    </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-lg-12 text-center py-5">
+                    <h3 class="text-muted">No stories found.</h3>
+                    <a href="{% url 'add_story' %}" class="btn btn-orange mt-3">Create One</a>
                 </div>
+            {% endif %}
+
+            <!-- Pagination -->
+            <div class="col-lg-12">
+              <div class="pagination">
+                <span class="step-links">
+                  {% if category_posts.has_previous %}
+                    <a href="?page=1">First</a>
+                    <a href="?page={{category_posts.previous_page_number}}">Prev</a>
+                  {% endif %}
+                  
+                  <span class="current">{{category_posts.number}} / {{category_posts.paginator.num_pages}}</span>
+
+                  {% if category_posts.has_next %}
+                    <a href="?page={{category_posts.next_page_number}}">Next</a>
+                    <a href="?page={{category_posts.paginator.num_pages}}">Last</a>
+                  {% endif %}
+                </span>
               </div>
             </div>
           </div>
+        </div>
+      </div>
           <div class="col-lg-4">
             {% include 'includes/sidebar.html' %}
           </div>

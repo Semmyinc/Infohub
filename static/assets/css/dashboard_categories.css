@@ -1,0 +1,6 @@
+/* Consistent hover and header styling */
+    .table-hover tbody tr:hover { background-color: #f8f9fa; }
+    thead th { font-weight: 600; letter-spacing: 0.5px; border-bottom: 1px solid #edf2f9 !important; }
+    
+    /* Ensuring the sidebar border looks clean */
+    .border-end { border-right: 1px solid #edf2f9 !important; }

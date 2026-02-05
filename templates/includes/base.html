@@ -10,7 +10,11 @@
     <meta name="author" content="TemplateMo">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
 
-    <title>Stand CSS Blog by TemplateMo</title>
+    {% if title %}
+      <title>InfoHub | {{title}}</title>
+    {% else %}
+      <title>InfoHub</title>
+    {% endif %}
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -26,6 +30,24 @@
     <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesomefree/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/about.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/contact.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/dashboard_categories.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/dashboard_stories.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/dashboard_users.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/dashboard_sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/register.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/reset_password.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/forgot_password.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/stories.css' %}">
+    
 <!--
 
 TemplateMo 551 Stand Blog

@@ -1,89 +1,56 @@
 <div class="sidebar">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="sidebar-item search">
-                <form method="POST" action="{% url 'search' %}">
-                    {% csrf_token %}
-                    <input type="text" name="keyword" class="searchText" placeholder="Search Items" autocomplete="on">
-                </form>
-                {% if search_count == 1 %}
-                    <p>{{search_count}} result found </p>
-                {% elif search_count > 1 %}
-                    <p>{{search_count}} results found </p>
-                {% endif %}
-            </div>
+    <!-- Search Section -->
+    <div class="sidebar-card mb-4">
+        <div class="sidebar-heading">
+            <h5 class="mb-3">Search Posts</h5>
         </div>
-        <div class="col-lg-12">
-            <div class="sidebar-item recent-posts">
-                <div class="sidebar-heading">
-                    <h2>Recent Posts</h2>
-                </div>
-                <div class="content">
-                    <ul>
-                        {% if posts %}
-                            {% for post in posts %}
-                                <li>
-                                    <a href="{% url 'story' post.slug %}">
-                                        <h5>{{post.name}}</h5>
-                                        <span>{{post.created_at | timesince}} ago</span>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        {% endif %}
-                    <!-- <li><a href="post-details.html">
-                        <h5>Suspendisse et metus nec libero ultrices varius eget in risus</h5>
-                        <span>May 28, 2020</span>
-                    </a></li>-->
-                        <li>Wanna Share a thought? <a href="{% url 'add_story' %}">Post it</a></li>
-                    </ul>
-                </div>
+        <form method="post" action="{% url 'search' %}" class="search-form">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="keyword" class="form-control styled-input" placeholder="Search items..." autocomplete="on">
+                <button class="btn btn-accent" type="submit"><i class="fa fa-search"></i></button>
             </div>
+        </form>
+        {% if search_count %}
+        <p class="search-stats mt-2">{{ search_count }} result{{ search_count|pluralize }} found</p>
+        {% endif %}
+    </div>
+
+    <!-- Recent Posts Section -->
+    <div class="sidebar-card mb-4">
+        <div class="sidebar-heading">
+            <h5 class="mb-3">Recent Stories</h5>
         </div>
-        <div class="col-lg-12">
-            <div class="sidebar-item categories">
-                <div class="sidebar-heading">
-                    <h2>Categories</h2> 
-                </div>
-                <div class="content">
-                    <ul>
-                        {% if categories %}
-                            {% for category in categories %}
-                                <li><a href="{% url 'category_posts' category.slug %}">{{category}}</a>&nbsp<a href="{% url 'edit_category' category.slug %}" class="text-muted"><i class="fas fa-edit"></i></a>&nbsp<a href="{% url 'delete_category' category.slug %}" class="text-muted"><i class="fas fa-trash"></i></a></li> 
-                                    <!-- <form action="{% url 'delete_category' category.slug %}" method='POST' ">
-                                        <i class="fas fa-trash"></i>
-                                        <p class="card-text">Are you sure that you want to delete category {{category.name}} ?</p>
-                                        <a href="{% url 'home' %}" class="btn btn-small btn-secondary">Cancel</a>
-                                        <a href="" class="btn btn-small btn-danger">Yes, Delete</a>
-                                    </form> -->
-                                 
-                            {% endfor %}
-                        {% endif %}
-                    <li><a href="{% url 'add_category' %}">Add Category</a></li>
-                    <!-- <li><a href="#">- Creative Ideas</a></li>
-                    <li><a href="#">- Responsive Templates</a></li>
-                    <li><a href="#">- HTML5 / CSS3 Templates</a></li>
-                    <li><a href="#">- Creative &amp; Unique</a></li> -->
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="sidebar-item tags">
-                <div class="sidebar-heading">
-                    <h2>Tag Clouds</h2>
-                </div>
-                <div class="content">
-                    <ul>
-                    <li><a href="#">Lifestyle</a></li>
-                    <li><a href="#">Creative</a></li>
-                    <li><a href="#">HTML5</a></li>
-                    <li><a href="#">Inspiration</a></li>
-                    <li><a href="#">Motivation</a></li>
-                    <li><a href="#">PSD</a></li>
-                    <li><a href="#">Responsive</a></li>
-                    </ul>
-                </div>
+        <div class="recent-posts-list">
+            {% if posts %}
+                {% for post in posts %}
+                <a href="{% url 'story' post.slug %}" class="post-item d-block text-decoration-none mb-3">
+                    <h6 class="post-title">{{ post.name }}</h6>
+                    <small class="post-meta"><i class="far fa-clock"></i> {{ post.created_at|timesince }} ago</small>
+                </a>
+                {% endfor %}
+            {% endif %}
+            <div class="cta-box mt-3 p-3 text-center">
+                <p class="mb-2">Wanna share a thought?</p>
+                <a href="{% url 'add_story' %}" class="btn btn-outline-primary btn-sm rounded-pill px-4">Post It</a>
             </div>
         </div>
     </div>
+
+    <!-- Categories Section -->
+    <div class="sidebar-card">
+        <div class="sidebar-heading">
+            <h5 class="mb-3">Categories</h5>
+        </div>
+        <div class="category-chips">
+            {% if categories %}
+                {% for category in categories %}
+                <a href="{% url 'category_posts' category.slug %}" class="badge rounded-pill bg-light text-dark border p-2 px-3 mb-2 d-inline-block transition-link">
+                    {{ category.name }}
+                </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 </div>
+

@@ -1,0 +1,9 @@
+/* Soft badge colors for a modern look */
+    .bg-success-soft { background-color: #e1fcef; color: #00d97e; }
+    .bg-warning-soft { background-color: #fff3e0; color: #ff9800; }
+    
+    /* Table hover effect */
+    .table-hover tbody tr:hover { background-color: #f8f9fa; }
+    
+    /* Clean column headers */
+    thead th { font-weight: 600; letter-spacing: 0.5px; border-bottom: 1px solid #edf2f9 !important; }

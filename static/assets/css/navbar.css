@@ -1,0 +1,56 @@
+
+  /* 1. Rebranded Logo Styling */
+  .navbar-brand {
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.5px;
+    color: #1e1e1e !important;
+    display: flex;
+    align-items: center;
+  }
+  .navbar-brand span {
+    font-weight: 300; /* Lighter weight for 'Hub' */
+    color: #444;
+  }
+  .brand-dot {
+    color: #f48840; /* Your brand orange */
+    margin-left: 2px;
+  }
+
+  /* 2. Glassmorphism UI */
+  .navbar {
+    background: rgba(255, 255, 255, 0.8) !important; /* Frosted look */
+    backdrop-filter: blur(15px); /* Core glass effect */
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); /* Premium soft shadow */
+    padding: 15px 0 !important;
+    transition: all 0.3s ease;
+  }
+
+  /* 3. Navigation Links & Hover Effects */
+  .nav-link {
+    font-weight: 600 !important;
+    color: #555 !important;
+    margin: 0 15px;
+    position: relative;
+    transition: 0.3s;
+  }
+  .nav-link:hover { color: #f48840 !important; }
+
+  /* Animated Underline Effect */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #f48840;
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after { width: 100%; }
+
+  /* Active State */
+  .nav-link.active { color: #f48840 !important; }
+  .nav-link.active::after { width: 100%; }

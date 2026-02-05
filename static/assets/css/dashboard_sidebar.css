@@ -1,0 +1,32 @@
+    /* 1. Base Styling */
+    .list-group-item-action {
+        color: #6c757d;
+        font-weight: 500;
+        transition: all 0.2s ease-in-out;
+        border-left: 4px solid transparent !important; /* Invisible bar by default */
+    }
+
+    /* 2. Hover Effect - Sliding Highlight */
+    .list-group-item-action:hover {
+        background-color: #f8f9fa;
+        color: #f48840; /* Theme Orange */
+        padding-left: 1.75rem !important; /* Gentle slide-in effect */
+    }
+
+    /* 3. Active State - Vertical Indicator Bar */
+    .list-group-item-action.active {
+        background-color: rgba(244, 136, 64, 0.08) !important; /* Soft orange tint */
+        color: #f48840 !important;
+        border-left: 4px solid #f48840 !important; /* The beautiful highlight bar */
+        font-weight: 700;
+    }
+
+    /* 4. Icon Sizing */
+    .list-group-item-action i {
+        font-size: 1.1rem;
+        opacity: 0.8;
+    }
+    
+    .list-group-item-action.active i {
+        opacity: 1;
+    }
