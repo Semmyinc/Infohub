@@ -1,0 +1,59 @@
+
+    /* Danger Zone Styling */
+    .delete-card {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #fee2e2; /* Soft red border */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        padding: 40px;
+        max-width: 550px;
+    }
+
+    .warning-icon {
+        font-size: 50px;
+        color: #dc3545;
+        margin-bottom: 20px;
+    }
+
+    .delete-card h2 {
+        font-weight: 800;
+        font-size: 22px;
+        color: #20232e;
+        margin-bottom: 15px;
+    }
+
+    .delete-card p {
+        color: #666;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 30px;
+    }
+
+    /* Button Layout */
+    .btn-delete {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-weight: 700;
+        transition: 0.3s;
+    }
+
+    .btn-delete:hover {
+        background-color: #a71d2a;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    }
+
+    .btn-cancel {
+        color: #6c757d;
+        text-decoration: none;
+        font-weight: 600;
+        margin-right: 20px;
+        transition: 0.3s;
+    }
+
+    .btn-cancel:hover {
+        color: #20232e;
+    }

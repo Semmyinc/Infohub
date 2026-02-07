@@ -17,7 +17,7 @@
             <div class="item-content">
               <div class="main-content">
                 <div class="meta-category">
-                  <span class="category-badge">{{story.category}}</span>
+                  <span class="category-badge"><a href="{% url 'category_posts' story.slug %}">{{story.category}}</a></span>
                 </div>
                 <a href="{% url 'story' story.slug %}"><h4 class="banner-title">{{story.name}}</h4></a>
                 <ul class="post-info-custom">
@@ -49,12 +49,12 @@
                 <div class="down-content p-4">
                   <a href="{% url 'story' story.slug %}"><h3>{{story.name}}</h3></a>
                   <ul class="post-info mb-3">
-                    <li><a href="#">{{story.author.username}}</a></li>
+                    <li><a href="{% url 'other_user_profile' story.id %}">{{story.author.username}}</a></li>
                     <li><a href="#">{{story.created_at | timesince}} ago</a></li>
                     {% if story.comments.count <= 1 %}
-                      <li><a href="#"><i class="far fa-comments"></i>{{story.comments.count}} comment</a></li>
+                      <li><a href="#"><i class="fas fa-comments"></i>{{story.comments.count}} comment</a></li>
                     {% else %}
-                      <li><a href="#"><i class="far fa-comments"></i>&nbsp;&nbsp;{{story.comments.count}} comments</a></li>
+                      <li><a href="#"><i class="fas fa-comments"></i>&nbsp;&nbsp;{{story.comments.count}} comments</a></li>
                     {% endif %}
 
                     {% if request.user == story.author %}

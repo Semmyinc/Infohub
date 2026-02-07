@@ -49,5 +49,31 @@ class UserForm(forms.ModelForm):
     phone = forms.CharField(label='', max_length=50, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone'}))
     
     class Meta:
-        model = Profile
+        model = Users
         fields = ('first_name', 'last_name', 'email', 'username', 'phone')
+
+class AddUserForm(forms.ModelForm):
+    password = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Password'}))
+    class Meta:
+        model = Users
+        fields = ['first_name', 'last_name', 'username', 'email', 'password', 'is_active', 'is_staff', 'is_admin', 'is_superuser', 'groups', 'user_permissions']
+    
+    def __init__(self, *args, **kwargs):
+        super(AddUserForm, self).__init__(*args, **kwargs)
+        # Loop through all fields to add Bootstrap classes automatically
+        for field in self.fields:
+            # Checkbox fields shouldn't have 'form-control' (they use 'form-check-input')
+            if isinstance(self.fields[field].widget, forms.CheckboxInput):
+                self.fields[field].widget.attrs.update({'class': 'form-check-input'})
+            else:
+                self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+    def save(self, commit=True):
+        # Override the save method to hash the password
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+            # If using ManyToMany fields like groups/permissions, you must call save_m2m()
+            self.save_m2m()
+        return user

@@ -19,7 +19,7 @@ class StoryForm(forms.ModelForm):
     body = forms.CharField(label='', widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'Post Body'}))
     category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label='Select Category')
     # category = forms.ChoiceField(choices=[], widget=forms.Select(attrs={'class':'form-select'}))
-    is_featured = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-check-input'}))
+    is_featured = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-check-input'}), required=False)
     status = forms.ChoiceField(choices=STATUS, widget=forms.Select(attrs={'class':'form-select'}), label='Status')
     class Meta:
         model = Blog

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RegisterForm, ProfileForm, UserForm
+from .forms import RegisterForm, ProfileForm, UserForm, AddUserForm
 from.models import Users, Profile
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -15,6 +15,53 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
+
+def adduser(request):
+    form = AddUserForm()
+    if request.method == 'POST':
+        form = AddUserForm(request.POST or None)
+        if form.is_valid():
+            # name = form.cleaned_data['first_name']
+            user = form.save()
+            name = user.first_name
+            messages.success(request, f"{name}'s account has been created successfully")
+            return redirect('dashboard_users') 
+        # messages.error(request, f'error occured while filling form. Please try again')
+        # return print(form.errors) 
+        # If form is invalid, we DON'T redirect. 
+        # We let it fall through so the user sees the specific field errors.
+        messages.error(request, "Please correct the errors below.")
+
+    context = {'form':form}
+    return render(request, 'users/adduser.html', context)  
+
+def edituser(request, pk):
+    user = get_object_or_404(Users, id=pk)
+    if request.method == 'POST':
+        form = AddUserForm(request.POST or None, instance=user)
+        if form.is_valid():
+            name = form.cleaned_data['first_name']
+            form.save()
+            messages.success(request, f'{name}\'s account has been updated successfully')
+            return redirect('dashboard_users') 
+        
+        messages.error(request, f'Please correct the errors below')
+        # return redirect('dashboard_users') 
+
+    form = AddUserForm(instance=user)
+    context = {'form':form}
+    return render(request, 'users/edituser.html', context)
+
+def deleteuser(request, pk):
+    user = get_object_or_404(Users, id=pk)
+    if request.method == 'POST':
+        user.delete()
+        messages.success(request, f'user account has been deleted successfully')
+        return redirect('dashboard_users')
+
+    context = {'user':user}
+    return render(request, 'users/deleteuser.html', context)
+
 
 def dashboard(request):
     categories = Category.objects.all()
@@ -152,8 +199,8 @@ def profile(request):
     userform = UserForm()
     profileform = ProfileForm()
     if request.method == 'POST':
-        userform = UserForm(request.POST or None)
-        profileform = ProfileForm(request.POST or None, request.FILES or None)
+        userform = UserForm(request.POST, instance=user)
+        profileform = ProfileForm(request.POST, request.FILES, instance=profile)
         if userform.is_valid() and profileform.is_valid():
             userform.save()
             profileform.save()
@@ -163,6 +210,12 @@ def profile(request):
     profileform = ProfileForm(instance=profile)
     context = {'userform':userform, 'profileform':profileform}
     return render(request, 'users/profile.html', context)
+
+def other_user_profile(request, pk):
+    other_user_profile = get_object_or_404(Profile, user__id=pk)
+    other_user = get_object_or_404(Users, id=pk)
+    context = {'other_user_profile':other_user_profile, 'other_user': other_user}
+    return render(request, 'users/other_user_profile.html', context)
 
 def forgot_password(request):
     if request.method == 'POST':

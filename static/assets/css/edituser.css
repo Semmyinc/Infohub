@@ -1,0 +1,44 @@
+
+    /* Consistent Dashboard Accents */
+    .card { border-radius: 15px; overflow: hidden; }
+    .card-header { background: #fff !important; border-bottom: 1px solid #f0f2f5 !important; }
+    
+    /* Input Field Polishing */
+    .card-body input:not([type="checkbox"]), 
+    .card-body select {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 14px;
+        border: 1px solid #e1e5eb;
+        border-radius: 8px;
+        background-color: #fcfcfc;
+        transition: all 0.3s ease;
+    }
+    
+    .card-body input:focus {
+        border-color: #f48840; /* InfoHub Orange */
+        background-color: #fff;
+        box-shadow: 0 0 0 3px rgba(244, 136, 64, 0.1);
+        outline: none;
+    }
+
+    /* Grid for Status Toggles */
+    .status-item {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #eee;
+        text-align: center;
+        transition: 0.3s;
+    }
+    .status-item:hover { border-color: #f48840; background: #fff; }
+
+    /* Fix for many-to-many select boxes */
+    select[multiple] {
+        min-height: 120px !important;
+        padding: 10px !important;
+    }
+
+    .btn-primary { background-color: #f48840 !important; border: none; transition: 0.3s; }
+    .btn-primary:hover { background-color: #20232e !important; transform: translateY(-2px); }

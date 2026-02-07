@@ -17,7 +17,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
         {% if user.is_authenticated %}
           <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+          <li class="nav-item">Logged in as <a class="nav-link" href="{% url 'profile' %}">{{request.user.fullname}}</a></li>
         {% else %}
           <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
@@ -30,13 +30,13 @@
 
 
 <!-- ***** Preloader Start ***** -->
-<div id="preloader">
+<!-- <div id="preloader">
     <div class="jumper">
         <div></div>
         <div></div>
         <div></div>
     </div>
-</div>  
+</div>   -->
 <!-- ***** Preloader End ***** -->
 
 <!-- Header -->

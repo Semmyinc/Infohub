@@ -44,7 +44,7 @@
                                 <td><span class="badge bg-light text-dark border">{{story.category}}</span></td>
                                 <td>{{story.author.username}}</td>
                                 <td>
-                                    {% if story.status == 'Published' %}
+                                    {% if story.status == 'published' %}
                                         <span class="badge rounded-pill bg-success-soft text-success">Published</span>
                                     {% else %}
                                         <span class="badge rounded-pill bg-warning-soft text-warning">Draft</span>
@@ -54,7 +54,7 @@
                                     {% if story.is_featured %}
                                         <i class="fas fa-star text-warning"></i>
                                     {% else %}
-                                        <i class="far fa-star text-muted"></i>
+                                        <i class="fas fa-star text-muted"></i>
                                     {% endif %}
                                 </td>
                                 <td class="text-end pe-4">

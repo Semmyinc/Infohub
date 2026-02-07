@@ -1,0 +1,116 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+<br><br><br><br><br>
+
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar Column -->
+        <div class="col-lg-3 mb-4">
+            <div class="sticky-top" style="top: 20px;">
+                {% include 'includes/dashboard_sidebar.html' %}
+            </div>
+        </div>
+
+        <!-- Form Column -->
+        <div class="col-lg-9">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-white py-4 border-bottom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold text-dark"><i class="fa fa-user-plus text-primary me-2"></i>Create New User</h5>
+                        <span class="badge bg-light text-dark p-2">System Admin Panel</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-5">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        
+                        <h6 class="text-uppercase fw-bold text-muted small mb-3">Identity & Credentials</h6>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">First Name</label>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Last Name</label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Username</label>
+                                {{ form.username }}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Email Address</label>
+                                {{ form.email }}
+                            </div> 
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Password</label>
+                                {{ form.password }}
+                            </div>
+                        </div>
+
+                        <!-- Permissions & Roles Section -->
+                        <h6 class="text-uppercase fw-bold text-muted small mb-3">Roles & Permissions</h6>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="bg-light p-3 rounded">
+                                    <label class="form-label small fw-bold">Assign Groups</label>
+                                    {{ form.groups }}
+                                    <div class="form-text small">Hold Ctrl to select multiple groups.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="bg-light p-3 rounded">
+                                    <label class="form-label small fw-bold">User Permissions</label>
+                                    {{ form.user_permissions }}
+                                    <div class="form-text small">Specific system-wide overrides.</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Account Status Switches -->
+                        <h6 class="text-uppercase fw-bold text-muted small mb-3">Account Status</h6>
+                        <div class="row mb-5 g-3">
+                            <div class="col-md-3">
+                                <div class="permission-box text-center">
+                                    <label class="d-block small fw-bold mb-2">Active</label>
+                                    {{ form.is_active }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="permission-box text-center">
+                                    <label class="d-block small fw-bold mb-2">Admin</label>
+                                    {{ form.is_admin }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="permission-box text-center">
+                                    <label class="d-block small fw-bold mb-2">Staff</label>
+                                    {{ form.is_staff }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="permission-box text-center">
+                                    <label class="d-block small fw-bold mb-2">Superuser</label>
+                                    {{ form.is_superuser }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end pt-4 border-top">
+                            <a href="{% url 'dashboard_users' %}" class="btn btn-light px-4 me-3">Cancel</a>
+                            <button type="submit" class="btn btn-primary px-5 fw-bold shadow-sm">Confirm & Create User</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

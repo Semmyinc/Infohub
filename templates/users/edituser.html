@@ -1,0 +1,119 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+<br><br><br><br><br>
+
+
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 mb-4">
+            <div class="sticky-top" style="top: 20px;">
+                {% include 'includes/dashboard_sidebar.html' %}
+            </div>
+        </div>
+
+        <!-- Update Form -->
+        <div class="col-lg-9">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header py-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold text-dark">
+                            <i class="fa fa-refresh text-primary me-2"></i>Update User Profile
+                        </h5>
+                        <small class="text-muted">Username: <strong>{{ form.instance.username }}</strong></small>
+                    </div>
+                </div>
+                
+                <div class="card-body p-5">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Account Details -->
+                        <h6 class="text-uppercase fw-bold text-muted small mb-3">Primary Information</h6>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">First Name</label>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Last Name</label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Username</label>
+                                {{ form.username }}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Email</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Password</label>
+                                {{ form.password }}
+                                <div class="form-text x-small">Leave blank to keep current.</div>
+                            </div>
+                        </div>
+
+                        <!-- Groups & Permissions -->
+                        <h6 class="text-uppercase fw-bold text-muted small mb-3">Access Control</h6>
+                        <div class="row mb-4 g-3">
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded bg-light">
+                                    <label class="form-label small fw-bold">Groups</label>
+                                    {{ form.groups }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded bg-light">
+                                    <label class="form-label small fw-bold">Permissions</label>
+                                    {{ form.user_permissions }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Status Toggles -->
+                        <h6 class="text-uppercase fw-bold text-muted small mb-3">Account Privileges</h6>
+                        <div class="row mb-5 g-3">
+                            <div class="col-md-3">
+                                <div class="status-item">
+                                    <label class="d-block small fw-bold mb-2">Active</label>
+                                    {{ form.is_active }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="status-item">
+                                    <label class="d-block small fw-bold mb-2">Admin</label>
+                                    {{ form.is_admin }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="status-item">
+                                    <label class="d-block small fw-bold mb-2">Staff</label>
+                                    {{ form.is_staff }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="status-item">
+                                    <label class="d-block small fw-bold mb-2">Superuser</label>
+                                    {{ form.is_superuser }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="d-flex justify-content-end align-items-center pt-4 border-top">
+                            <a href="{% url 'dashboard_users' %}" class="text-muted me-4 text-decoration-none small fw-bold">Cancel Changes</a>
+                            <button type="submit" class="btn btn-primary px-5 fw-bold shadow-sm">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

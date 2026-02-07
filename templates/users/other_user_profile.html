@@ -1,0 +1,49 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+<br><br><br><br><br><br>
+    <div class="container py-5">
+    <div class="card mx-auto border-0 shadow-sm" style="max-width: 350px; border-radius: 15px;">
+        <div class="card-body text-center">
+            <!-- Profile Image -->
+            <div class="mb-3">
+                <img src="{{ other_user_profile.image.url }}" 
+                     alt="Profile Picture" 
+                     class="rounded-circle img-thumbnail shadow-sm" 
+                     style="width: 100px; height: 100px; object-fit: cover;">
+            </div>
+
+            <!-- Name & Username -->
+            <h5 class="card-title mb-1 fw-bold">
+                {{ other_user.first_name }} {{ other_user.last_name }}
+            </h5>
+            <p class="text-primary small mb-3">@{{ other_user.username }}</p>
+
+            <hr class="text-muted opacity-25">
+
+            <!-- Contact Details -->
+            <div class="text-start px-3">
+                <p class="small mb-2 text-secondary">
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    {{ other_user_profile.address }}, {{ other_user_profile.city }}, {{ other_user_profile.state }}
+                </p>
+                <p class="small mb-2 text-secondary">
+                    <i class="fas fa-envelope me-2"></i>
+                    {{ other_user.email }}
+                </p>
+                <p class="small mb-0 text-secondary">
+                    <i class="fas fa-phone me-2"></i>
+                    {{ other_user_profile.phone }}
+                </p>
+            </div>
+            
+            <!-- Optional Action Button -->
+            <div class="mt-4">
+                <a href="#" class="btn btn-outline-primary btn-sm w-100 rounded-pill">View Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
